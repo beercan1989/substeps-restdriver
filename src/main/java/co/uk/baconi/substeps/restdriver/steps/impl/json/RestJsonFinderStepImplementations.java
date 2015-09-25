@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isA;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
-class RestJsonFinderStepImplementations extends AbstractRestDriverSubStepImplementations {
+public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStepImplementations {
 
     @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody an 'object'")
     public Map<String, Object> findJsonElementByJsonPathInRestResponseBodyAnObject(final String jsonPath) throws IOException {

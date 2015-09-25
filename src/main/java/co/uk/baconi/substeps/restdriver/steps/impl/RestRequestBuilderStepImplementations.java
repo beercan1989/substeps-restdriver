@@ -47,7 +47,12 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         //
         // Create a URL comprising of the Base URL and the value passed in.
         //
-        final String fullURL = RestDriverSubstepsConfiguration.PROPERTIES.getBaseUrl() + url;
+        final String fullURL;
+        if(url.startsWith("http://") || url.startsWith("https://") || url.startsWith("file://")) {
+            fullURL = url;
+        } else {
+            fullURL = RestDriverSubstepsConfiguration.PROPERTIES.getBaseUrl() + url;
+        }
 
         if (logger.isDebugEnabled()) {
             logger.debug("Creating new fluent Request with Method [" + method + "], URL [" + fullURL + "].");
@@ -59,35 +64,35 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         final Request newRequest;
         switch (method.toUpperCase()) {
             case HttpDelete.METHOD_NAME: {
-                newRequest = Request.Delete(url);
+                newRequest = Request.Delete(fullURL);
                 break;
             }
             case HttpGet.METHOD_NAME: {
-                newRequest = Request.Get(url);
+                newRequest = Request.Get(fullURL);
                 break;
             }
             case HttpHead.METHOD_NAME: {
-                newRequest = Request.Head(url);
+                newRequest = Request.Head(fullURL);
                 break;
             }
             case HttpOptions.METHOD_NAME: {
-                newRequest = Request.Options(url);
+                newRequest = Request.Options(fullURL);
                 break;
             }
             case HttpPatch.METHOD_NAME: {
-                newRequest = Request.Patch(url);
+                newRequest = Request.Patch(fullURL);
                 break;
             }
             case HttpPost.METHOD_NAME: {
-                newRequest = Request.Post(url);
+                newRequest = Request.Post(fullURL);
                 break;
             }
             case HttpPut.METHOD_NAME: {
-                newRequest = Request.Put(url);
+                newRequest = Request.Put(fullURL);
                 break;
             }
             case HttpTrace.METHOD_NAME: {
-                newRequest = Request.Trace(url);
+                newRequest = Request.Trace(fullURL);
                 break;
             }
             default: {

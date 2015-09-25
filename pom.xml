@@ -68,6 +68,8 @@
         <jsonpath.version>2.0.0</jsonpath.version>
         <json-smart.version>2.2</json-smart.version>
 
+        <spring.boot.version>1.2.6.RELEASE</spring.boot.version>
+
         <!-- Matchers -->
         <hamcrest.version>2.0.0.0</hamcrest.version>
         <junit.version>4.12</junit.version>
@@ -154,6 +156,26 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>com.technophobia.substeps</groupId>
+            <artifactId>substeps-junit-runner</artifactId>
+            <version>${substeps.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.technophobia.substeps</groupId>
+            <artifactId>substeps-core</artifactId>
+            <version>${substeps.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

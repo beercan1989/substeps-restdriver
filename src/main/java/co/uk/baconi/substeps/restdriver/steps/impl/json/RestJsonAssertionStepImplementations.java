@@ -49,11 +49,11 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
         switch (type) {
             case "object": {
-                finderImpl.findJsonElementByJsonPathInRestResponseBodyAnObject(".");
+                finderImpl.findJsonElementByJsonPathInRestResponseBodyAnObject("$");
                 break;
             }
             case "array": {
-                finderImpl.findJsonElementByJsonPathInRestResponseBodyAnArray(".");
+                finderImpl.findJsonElementByJsonPathInRestResponseBodyAnArray("$");
                 break;
             }
             default: {
