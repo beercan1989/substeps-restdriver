@@ -11,8 +11,8 @@ Define: Containing a valid JSON array
     AssertRestResponseBody is JSON 'array'
 
 Define: Containing the some stuff
-    AssertJsonElement ByJsonPath '$.[0]' in RestResponseBody a 'string' with value: Stuff 1
-    AssertJsonElement ByJsonPath '$.[1]' in RestResponseBody a 'string' with value: Stuff 2
-    AssertJsonElement ByJsonPath '$.[2]' in RestResponseBody a 'string' with value: Stuff 3
-    AssertJsonElement ByJsonPath '$.[3]' in RestResponseBody a 'string' with value: Stuff 4
-    AssertJsonElement ByJsonPath '$.[4]' in RestResponseBody a 'string' with value: Stuff 5
+    AssertJsonElement ByJsonPath '$[0]' in RestResponseBody a 'string' with value: Stuff 1
+    AssertJsonElement ByJsonPath '$[1]' in RestResponseBody a 'string' with value: Stuff 2
+    AssertJsonElement ByJsonPath '$[2]' in RestResponseBody a 'string' with value: Stuff 3
+    AssertJsonElement ByJsonPath '$[3]' in RestResponseBody a 'string' with value: Stuff 4
+    AssertJsonElement ByJsonPath '$[4]' in RestResponseBody a 'string' with value: Stuff 5
