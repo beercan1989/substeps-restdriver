@@ -1,4 +1,5 @@
-# Substeps RestDriver
+# Substeps RestDriver [![Build Status](https://travis-ci.org/beercan1989/substeps-restdriver.svg?branch=master)](https://travis-ci.org/beercan1989/substeps-restdriver)
+
 Project to provide a new type of Driver for use with Substeps, that will enable the ability to testing of rest endpoints by creating requests and asserting the responses.
 
 + Substeps Site: https://substeps.g2g3.digital
