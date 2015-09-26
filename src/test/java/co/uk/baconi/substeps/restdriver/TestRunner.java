@@ -14,11 +14,10 @@
 
 package co.uk.baconi.substeps.restdriver;
 
-
+import co.uk.baconi.substeps.restdriver.impl.TestServerSetup;
 import com.technophobia.substeps.runner.JunitFeatureRunner;
 import com.technophobia.substeps.runner.JunitFeatureRunner.SubStepsConfiguration;
 import org.junit.runner.RunWith;
-
 
 @SubStepsConfiguration(
         featureFile = "./target/test-classes/features",

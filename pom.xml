@@ -24,12 +24,12 @@
     <artifactId>restdriver-substeps</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>SubSteps CLI Runner Parent</name>
+    <name>SubSteps RestDriver</name>
 
     <scm>
-        <url>https://github.com/beercan1989/substeps-cli-runner</url>
-        <connection>scm:git:git://github.com/beercan1989/substeps-cli-runner.git</connection>
-        <developerConnection>scm:git:git@github.com:beercan1989/substeps-cli-runner.git</developerConnection>
+        <url>https://github.com/beercan1989/substeps-restdriver</url>
+        <connection>scm:git:git://github.com/beercan1989/substeps-restdriver.git</connection>
+        <developerConnection>scm:git:git@github.com:beercan1989/substeps-restdriver.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 

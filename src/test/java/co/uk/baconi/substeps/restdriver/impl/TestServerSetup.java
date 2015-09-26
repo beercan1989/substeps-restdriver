@@ -12,9 +12,8 @@
  * limitations under the License.
  */
 
-package co.uk.baconi.substeps.restdriver;
+package co.uk.baconi.substeps.restdriver.impl;
 
-import co.uk.baconi.substeps.restdriver.impl.TestApplication;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import com.technophobia.substeps.runner.setupteardown.Annotations.BeforeAllFeatures;
 import org.springframework.boot.SpringApplication;
