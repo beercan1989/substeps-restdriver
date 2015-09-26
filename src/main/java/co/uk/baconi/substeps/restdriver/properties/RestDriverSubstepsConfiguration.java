@@ -31,7 +31,7 @@ public enum RestDriverSubstepsConfiguration {
     PROPERTIES("environment"); // uninstantiable
 
     /**
-     * All properties under "co.uk.baconi.substeps.driver", including environment specific if available.
+     * All properties under "substeps.driver", including environment specific if available.
      */
     private final Config properties;
 
@@ -45,9 +45,9 @@ public enum RestDriverSubstepsConfiguration {
     RestDriverSubstepsConfiguration(final String environmentProperty) {
 
         //
-        // All properties under "co.uk.baconi.substeps.driver", including environment specific if available.
+        // All properties under "substeps.driver", including environment specific if available.
         //
-        final String propertyBase = "co.uk.baconi.substeps.driver";
+        final String propertyBase = "substeps.driver";
         final Config systemProperties = ConfigFactory.systemProperties();
         if (systemProperties.hasPath(environmentProperty)) {
             final String environment = systemProperties.getString(environmentProperty);
