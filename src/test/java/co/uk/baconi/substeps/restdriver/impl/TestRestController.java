@@ -14,9 +14,11 @@
 
 package co.uk.baconi.substeps.restdriver.impl;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import co.uk.baconi.substeps.restdriver.impl.models.Result;
+import co.uk.baconi.substeps.restdriver.impl.models.Stuff;
+import co.uk.baconi.substeps.restdriver.impl.models.NumberPair;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,8 @@ import java.util.List;
 @RestController
 public class TestRestController {
 
-    @RequestMapping(value = "/stuff", method = RequestMethod.GET)
-    List<String> getStuff(){
+    @RequestMapping(value = "/get-list-of-string", method = RequestMethod.GET)
+    List<String> getListOfString() {
         final List<String> stuff = new ArrayList<>();
         stuff.add("Stuff 1");
         stuff.add("Stuff 2");
@@ -35,4 +37,38 @@ public class TestRestController {
         return stuff;
     }
 
+    @RequestMapping(value = "/get-list-of-stuff", method = RequestMethod.GET)
+    List<Stuff> getListOfStuff() {
+        final List<Stuff> stuff = new ArrayList<>();
+        stuff.add(new Stuff("Stuff 1"));
+        stuff.add(new Stuff("Stuff 2"));
+        stuff.add(new Stuff("Stuff 3"));
+        stuff.add(new Stuff("Stuff 4"));
+        stuff.add(new Stuff("Stuff 5"));
+        return stuff;
+    }
+
+    @RequestMapping(value = "/get-stuff", method = RequestMethod.GET)
+    Stuff getStuff() {
+        return new Stuff("Stuff 6");
+    }
+
+    @RequestMapping(value = "/delete-success", method = RequestMethod.DELETE)
+    void deleteSuccess() {
+    }
+
+    @RequestMapping(value = "/delete-failure", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void deleteFailure() {
+    }
+
+    @RequestMapping(value = "/post-sum", method = RequestMethod.POST)
+    Result<Long> postSum(@RequestBody final NumberPair numbers) {
+        return getSum(numbers.getFirst(), numbers.getSecond());
+    }
+
+    @RequestMapping(value = "/get-sum", method = RequestMethod.GET)
+    Result<Long> getSum(final long first, final long second) {
+        return new Result<>(first + second);
+    }
 }

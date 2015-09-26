@@ -1,0 +1,17 @@
+Define: Then I execute the API call
+    ExecuteRestRequest with available configuration
+
+Define: And I get a successful response
+	AssertRestResponse has code '200'
+
+Define: And I get a not found response
+	AssertRestResponse has code '404'
+
+Define: Containing a valid JSON array
+    AssertRestResponseBody is JSON 'array'
+
+Define: Containing a valid JSON object
+    AssertRestResponseBody is JSON 'object'
+
+Define: With data '<key>' and value '<value>'
+    RestRequest add data with name '<key>' and value '<value>'

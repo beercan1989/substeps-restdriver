@@ -1,16 +1,7 @@
-Define: Given I am creating an API call to get some stuff
-    NewRestRequest as 'GET' to '/stuff'
+Define: Given I am creating an API call to get a list of strings
+    NewRestRequest as 'GET' to '/get-list-of-string'
 
-Define: Then I execute the API call
-    ExecuteRestRequest with available configuration
-
-Define: And I get a successful response
-	AssertRestResponse has code '200'
-
-Define: Containing a valid JSON array
-    AssertRestResponseBody is JSON 'array'
-
-Define: Containing the some stuff
+Define: Containing list of some strings
     AssertJsonElement ByJsonPath '$[0]' in RestResponseBody a 'string' with value: Stuff 1
     AssertJsonElement ByJsonPath '$[1]' in RestResponseBody a 'string' with value: Stuff 2
     AssertJsonElement ByJsonPath '$[2]' in RestResponseBody a 'string' with value: Stuff 3

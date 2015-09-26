@@ -1,0 +1,2 @@
+Define: Given I am creating an API GET call to add two numbers
+    NewRestRequest as 'GET' to '/get-sum?first=1&second=2'

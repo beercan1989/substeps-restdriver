@@ -1,0 +1,2 @@
+Define: Given I am creating an API call to delete stuff, but setup to fail
+    NewRestRequest as 'DELETE' to '/delete-failure'
