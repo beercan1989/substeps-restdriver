@@ -84,6 +84,15 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         assertThat(result, is(equalTo(expectedValue)));
     }
 
+    @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'boolean' with value: ([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])")
+    public void assertJsonElementByJsonPathInRestResponseBodyABooleanWithValue(final String jsonPath, final boolean expectedValue) throws IOException {
+        logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
+
+        final boolean result = finderImpl.findJsonElementByJsonPathInRestResponseBodyABoolean(jsonPath);
+
+        assertThat(result, is(equalTo(expectedValue)));
+    }
+
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody (a|an) '(object|array)'")
     public void assertJsonElementByJsonPathInRequestResponseBody(final String jsonPath, final String aOrAn, final String type) throws IOException {
         logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is " + aOrAn + " [" + type + "]");
@@ -118,9 +127,18 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'number' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsANumberWithValue(final double expectedValue) {
-        logger.debug("Asserting that JsonElement from RestResponseBody is a string with value: " + expectedValue);
+        logger.debug("Asserting that JsonElement from RestResponseBody is a number with value: " + expectedValue);
 
-        final Number currentJsonElement = getCurrentJsonElement(Number.class);
+        final double currentJsonElement = getCurrentJsonElement(Number.class).doubleValue();
+
+        assertThat(currentJsonElement, is(equalTo(expectedValue)));
+    }
+
+    @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: ([0-9]+(?:\\.[0-9]+)?)")
+    public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsABooleanWithValue(final boolean expectedValue) {
+        logger.debug("Asserting that JsonElement from RestResponseBody is a boolean with value: " + expectedValue);
+
+        final Boolean currentJsonElement = getCurrentJsonElement(Boolean.class);
 
         assertThat(currentJsonElement, is(equalTo(expectedValue)));
     }

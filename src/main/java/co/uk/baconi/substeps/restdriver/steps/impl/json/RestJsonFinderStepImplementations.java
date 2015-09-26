@@ -57,6 +57,11 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
         return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(Number.class));
     }
 
+    @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'boolean'")
+    public Boolean findJsonElementByJsonPathInRestResponseBodyABoolean(final String jsonPath) throws IOException {
+        return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(Boolean.class));
+    }
+
     private <A, B extends A> B findJsonElementByJsonPathInRestResponseBodyImpl(final String jsonPath, final Matcher<A> expectedType) throws IOException {
 
         logger.debug("Find by JsonPath [" + jsonPath + "] and expected type [" + expectedType + "]");
