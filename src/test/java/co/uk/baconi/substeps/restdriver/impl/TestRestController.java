@@ -71,4 +71,15 @@ public class TestRestController {
     Result<Long> getSum(final long first, final long second) {
         return new Result<>(first + second);
     }
+
+    @RequestMapping(value = "/get-false", method = RequestMethod.GET)
+    Result<Boolean> getFalse() {
+        return new Result<>(false);
+    }
+
+    @RequestMapping(value = "/get-true", method = RequestMethod.GET)
+    Result<Boolean> getTrue() {
+        return new Result<>(true);
+    }
+
 }
