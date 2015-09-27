@@ -42,7 +42,8 @@ import java.util.List;
 public class RestRequestBuilderStepImplementations extends AbstractRestDriverSubStepImplementations {
 
     /**
-     * Create a new rest request using the given HTTP method and URL.
+     * Create a new rest request using the given HTTP method and URL. The URL can either be absolute or relative to the
+     * base url in the properties.
      *
      * @param method the HTTP method type to create the request as.
      * @param url    the URL where the request will be sent to.
