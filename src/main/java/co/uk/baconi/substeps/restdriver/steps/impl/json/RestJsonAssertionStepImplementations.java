@@ -42,6 +42,14 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
     // AssertRestResponseBody
     //
 
+    /**
+     * Assert that the rest response body is the given JSON base type.
+     *
+     * @param type the JsonPath to search with.
+     * @example AssertRestResponseBody is JSON 'object'
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertRestResponseBody is JSON '(object|array)'")
     public void assertRestResponseBodyIsJson(final String type) throws IOException {
 
@@ -66,8 +74,17 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
     // AssertJsonElement ByJsonPath
     //
 
+    /**
+     * Assert that at the given JsonPath there is a string with the given value.
+     *
+     * @param jsonPath      the JsonPath to search with
+     * @param expectedValue the expected string to find
+     * @example AssertJsonElement ByJsonPath '$.someString' in RestResponseBody a 'string' with value: test string
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'string' with value: (.*)")
-    public void assertJsonElementByJsonPathInRestResponseBodyAStringWithValue(final String jsonPath,final String expectedValue) throws IOException {
+    public void assertJsonElementByJsonPathInRestResponseBodyAStringWithValue(final String jsonPath, final String expectedValue) throws IOException {
         logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
 
         final String result = finderImpl.findJsonElementByJsonPathInRestResponseBodyAString(jsonPath);
@@ -75,6 +92,15 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         assertThat(result, is(equalToIgnoringWhiteSpace(expectedValue)));
     }
 
+    /**
+     * Assert that at the given JsonPath there is a number with the given value.
+     *
+     * @param jsonPath      the JsonPath to search with
+     * @param expectedValue the expected number to find
+     * @example AssertJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number' with value: 666
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'number' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertJsonElementByJsonPathInRestResponseBodyANumberWithValue(final String jsonPath, final double expectedValue) throws IOException {
         logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
@@ -84,6 +110,15 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         assertThat(result, is(equalTo(expectedValue)));
     }
 
+    /**
+     * Assert that at the given JsonPath there is a boolean with the given value.
+     *
+     * @param jsonPath      the JsonPath to search with
+     * @param expectedValue the expected boolean to find
+     * @example AssertJsonElement ByJsonPath '$.someBoolean' in RestResponseBody a 'boolean' with value: false
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'boolean' with value: ([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])")
     public void assertJsonElementByJsonPathInRestResponseBodyABooleanWithValue(final String jsonPath, final boolean expectedValue) throws IOException {
         logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
@@ -93,6 +128,16 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         assertThat(result, is(equalTo(expectedValue)));
     }
 
+    /**
+     * Assert that at the given JsonPath there is the given base JSON type.
+     *
+     * @param jsonPath the JsonPath to search with
+     * @param aOrAn    a or an, it doesn't matcher which, only useful for reading and logging
+     * @param type     the base JSON type to expect
+     * @example AssertJsonElement ByJsonPath '$.something.someArray' in RestResponseBody an 'array'
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody (a|an) '(object|array)'")
     public void assertJsonElementByJsonPathInRequestResponseBody(final String jsonPath, final String aOrAn, final String type) throws IOException {
         logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is " + aOrAn + " [" + type + "]");
@@ -116,6 +161,14 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
     // AssertJsonElement ByPreviousFind
     //
 
+    /**
+     * Assert that at the last find by JsonPath there is a string with the given value.
+     *
+     * @param expectedValue the expected string to find
+     * @example AssertJsonElement ByPreviousFind in RestResponseBody is a 'string' with value: test string
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'string' with value: (.*)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsAStringWithValue(final String expectedValue) {
         logger.debug("Asserting that JsonElement from RestResponseBody is a string with value: " + expectedValue);
@@ -125,6 +178,14 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         assertThat(currentJsonElement, is(equalTo(expectedValue)));
     }
 
+    /**
+     * Assert that at the last find by JsonPath there is a number with the given value.
+     *
+     * @param expectedValue the expected number to find
+     * @example AssertJsonElement ByPreviousFind in RestResponseBody is a 'number' with value: 666.616
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'number' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsANumberWithValue(final double expectedValue) {
         logger.debug("Asserting that JsonElement from RestResponseBody is a number with value: " + expectedValue);
@@ -134,6 +195,14 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         assertThat(currentJsonElement, is(equalTo(expectedValue)));
     }
 
+    /**
+     * Assert that at the last find by JsonPath there is a boolean with the given value.
+     *
+     * @param expectedValue the expected boolean to find
+     * @example AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: true
+     * @section Rest Assertion - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsABooleanWithValue(final boolean expectedValue) {
         logger.debug("Asserting that JsonElement from RestResponseBody is a boolean with value: " + expectedValue);

@@ -41,6 +41,15 @@ import java.util.List;
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestRequestBuilderStepImplementations extends AbstractRestDriverSubStepImplementations {
 
+    /**
+     * Create a new rest request using the given HTTP method and URL.
+     *
+     * @param method the HTTP method type to create the request as.
+     * @param url    the URL where the request will be sent to.
+     * @example NewRestRequest as 'GET' to '/get-stuff'
+     * @example NewRestRequest as 'GET' to 'http://localhost:9000/get-stuff'
+     * @section Rest Builder
+     */
     @Step("NewRestRequest as '(DELETE|GET|HEAD|OPTIONS|PATCH|POST|PUT|TRACE)' to '([^']+)'")
     public void newRequestAsMethodToUrl(final String method, final String url) {
 
@@ -48,7 +57,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         // Create a URL comprising of the Base URL and the value passed in.
         //
         final String fullURL;
-        if(url.startsWith("http://") || url.startsWith("https://") || url.startsWith("file://")) {
+        if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("file://")) {
             fullURL = url;
         } else {
             fullURL = RestDriverSubstepsConfiguration.PROPERTIES.getBaseUrl() + url;
@@ -119,6 +128,14 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     // Headers
     //
 
+    /**
+     * Add a header to the current rest request being built with the given name and value
+     *
+     * @param name  the name of the header to add
+     * @param value the value to set in the header
+     * @example RestRequest add header with name 'api_key' and value '1234567890'
+     * @section Rest Builder
+     */
     @Step("RestRequest add header with name '([^']+)' and value '([^']+)'")
     public void restRequestAddHeadWithNameAndValue(final String name, final String value) {
 
@@ -132,11 +149,28 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     // Cookies
     //
 
+    /**
+     * Add a cookie to the current rest request being built with the given name and value
+     *
+     * @param name  the name of the cookie to add
+     * @param value the value to set in the cookie
+     * @example RestRequest add cookie with name 'JESSIONID' and value 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+     * @section Rest Builder
+     */
     @Step("RestRequest add cookie with name '([^']+)' and value '([^']+)'")
     public void restRequestAddCookieWithNameAndValue(final String name, final String value) {
         restRequestAddCookieWithNameAndValueInScope(name, value, Scope.SCENARIO);
     }
 
+    /**
+     * Add a cookie to the given scope with the given name and value, and will be used in any request until the scope expires.
+     *
+     * @param name  the name of the cookie to add
+     * @param value the value to set in the cookie
+     * @param scope the scope where the cookie will persist in
+     * @example RestRequest add cookie with name 'JESSIONID' and value 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' in scope 'FEATURE'
+     * @section Rest Builder
+     */
     @Step("RestRequest add cookie with name '([^']+)' and value '([^']+)' in scope '(SUITE|FEATURE|SCENARIO|SCENARIO_BACKGROUND|SCENARIO_OUTLINE|SCENARIO_OUTLINE_ROW|STEP)'")
     public void restRequestAddCookieWithNameAndValueInScope(
             final String name, final String value, @StepParameter(converter = ScopeConverter.class) final Scope scope
@@ -152,6 +186,14 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     // Request Body
     //
 
+    /**
+     * Add data to the current request being built, with the name and value provided.
+     *
+     * @param name  the key name of the data to add
+     * @param value the data value to set
+     * @example RestRequest add data with name 'name' and value 'my_name'
+     * @section Rest Builder
+     */
     @Step("RestRequest add data with name '([^']+)' and value '([^']+)'")
     public void restRequestAddDataWithNameAndValue(final String name, final String value) {
 
@@ -160,6 +202,14 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         addToRequestBody(name, value);
     }
 
+    /**
+     * Select the type of rest request body builder to be used in the current scenario. Currently there is only support
+     * for SimpleJsonRequestBodyBuilder (key pairs in json format) and KeyPairRequestBodyBuilder (form submission format).
+     *
+     * @param builder the type of rest request body builder
+     * @example NewRestRequestBody using the 'SimpleJsonRequestBodyBuilder'
+     * @section Rest Builder
+     */
     @Step("NewRestRequestBody using the '(SimpleJsonRequestBodyBuilder|KeyPairRequestBodyBuilder)'")
     public void newRequestBodyUsingThe(@StepParameter(converter = RequestBodyBuilderConverter.class) final RequestBodyBuilder builder) {
 
@@ -172,6 +222,13 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     // Request Configuration
     //
 
+    /**
+     * Set the user agent string for the current rest request.
+     *
+     * @param userAgent the string to use as the user agent identifier
+     * @example RestRequest set user-agent string as 'SubstepsRestDriver/0.0.1 (+https://github.com/beercan1989/substeps-restdriver)'
+     * @section Rest Builder
+     */
     @Step("RestRequest set user-agent string as '([^']+)'")
     public void restRequestSetUserAgentStringAs(final String userAgent) {
 
@@ -180,6 +237,13 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         getRequest().userAgent(userAgent);
     }
 
+    /**
+     * Set the proxy for the current rest request.
+     *
+     * @param proxy the proxy string to use.
+     * @example RestRequest set proxy as 'http://localhost:616'
+     * @section Rest Builder
+     */
     @Step("RestRequest set proxy as '([^']+)'")
     public void restRequestSetProxyAs(final String proxy) {
 
@@ -188,6 +252,13 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         getRequest().viaProxy(proxy);
     }
 
+    /**
+     * Set the connect timeout for the current rest request.
+     *
+     * @param timeout the connect timeout in milliseconds
+     * @example RestRequest set connect timeout as '5000'
+     * @section Rest Builder
+     */
     @Step("RestRequest set connect timeout as '([0-9]+)'")
     public void restRequestSetConnectTimeoutAs(final int timeout) {
 
@@ -196,6 +267,13 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         getRequest().connectTimeout(timeout);
     }
 
+    /**
+     * Set the socket timeout for the current rest request.
+     *
+     * @param timeout the socket timeout in milliseconds
+     * @example RestRequest set connect timeout as '5000'
+     * @section Rest Builder
+     */
     @Step("RestRequest set socket timeout as '([0-9]+)'")
     public void restRequestSetSocketTimeoutAs(final int timeout) {
 
@@ -209,6 +287,12 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     // Executing Request
     //
 
+    /**
+     * Execute the current rest request, using config from previous steps and cookies from all available scopes.
+     *
+     * @example ExecuteRestRequest with available configuration
+     * @section Rest Builder
+     */
     @Step("ExecuteRestRequest with available configuration")
     public void executeRestRequestWithAvailableConfiguration() throws IOException {
 

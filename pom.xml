@@ -192,6 +192,37 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.technophobia.substeps</groupId>
+                <artifactId>substeps-glossary-builder</artifactId>
+                <version>${substeps.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>build-substeps-glossary</id>
+                        <phase>process-classes</phase>
+
+                        <goals>
+                            <goal>generate-docs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <stepImplementationClassNames>
+                        <param>co.uk.baconi.substeps.restdriver.steps.impl.RestRequestBuilderStepImplementations</param>
+                        <param>co.uk.baconi.substeps.restdriver.steps.impl.RestAssertionStepImplementations</param>
+
+                        <param>co.uk.baconi.substeps.restdriver.steps.impl.json.RestJsonAssertionStepImplementations</param>
+                        <param>co.uk.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplementations</param>
+                    </stepImplementationClassNames>
+
+                    <glossaryPublisher implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
+                        <outputFile>${project.build.directory}/classes/step-implementations.json</outputFile>
+                    </glossaryPublisher>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

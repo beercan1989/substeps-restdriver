@@ -31,6 +31,13 @@ import static org.hamcrest.Matchers.*;
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestAssertionStepImplementations extends AbstractRestDriverSubStepImplementations {
 
+    /**
+     * Check that the rest response has the expected http status response code.
+     *
+     * @param expectedStatusCode the expected status code
+     * @example AssertRestResponse has code '200'
+     * @section Rest Assertion
+     */
     @Step("AssertRestResponse has code '([0-9]{3})'")
     public void assertRestResponseHasCode(final int expectedStatusCode) {
 
@@ -41,6 +48,14 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
         assertThat(actualStatusCode, is(equalTo(expectedStatusCode)));
     }
 
+    /**
+     * Check that the rest response has the expected http status response code with expected reason.
+     *
+     * @param expectedStatusCode the expected status code
+     * @param expectedReason     the expected reason
+     * @example AssertRestResponse has code '200' with reason 'OK'
+     * @section Rest Assertion
+     */
     @Step("AssertRestResponse has code '([0-9]{3})' with reason '([^']+)'")
     public void assertRestResponseHasCodeWithReason(final int expectedStatusCode, final String expectedReason) {
 
@@ -54,6 +69,14 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
         assertThat(reasonPhrase, is(equalTo(expectedReason)));
     }
 
+    /**
+     * Check that the rest response has the expected http status is within the given range.
+     *
+     * @param expectedMin the minimum expected status code
+     * @param expectedMax the manimum expected status code
+     * @example AssertRestResponse has code between '200' and '299'
+     * @section Rest Assertion
+     */
     @Step("AssertRestResponse has code between '([0-9]{3})' and '([0-9]{3})'")
     public void assertRestResponseHasCodeBetween(final int expectedMin, final int expectedMax) {
 

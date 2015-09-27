@@ -37,26 +37,66 @@ import static org.hamcrest.Matchers.isA;
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStepImplementations {
 
+    /**
+     * Find a JSON object by the given JsonPath and store it for further inspection.
+     *
+     * @param jsonPath the JsonPath to search with
+     * @example FindJsonElement ByJsonPath '$.someObject' in RestResponseBody an 'object'
+     * @section Rest Finder - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody an 'object'")
     public Map<String, Object> findJsonElementByJsonPathInRestResponseBodyAnObject(final String jsonPath) throws IOException {
         return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(Map.class));
     }
 
+    /**
+     * Find a JSON array by the given JsonPath and store it for further inspection.
+     *
+     * @param jsonPath the JsonPath to search with
+     * @example FindJsonElement ByJsonPath '$.someArray' in RestResponseBody an 'array'
+     * @section Rest Finder - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody an 'array'")
     public List<Object> findJsonElementByJsonPathInRestResponseBodyAnArray(final String jsonPath) throws IOException {
         return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(List.class));
     }
 
+    /**
+     * Find a JSON string by the given JsonPath and store it for further inspection.
+     *
+     * @param jsonPath the JsonPath to search with
+     * @example FindJsonElement ByJsonPath '$.someString' in RestResponseBody a 'string'
+     * @section Rest Finder - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'string'")
     public String findJsonElementByJsonPathInRestResponseBodyAString(final String jsonPath) throws IOException {
         return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(String.class));
     }
 
+    /**
+     * Find a JSON number by the given JsonPath and store it for further inspection.
+     *
+     * @param jsonPath the JsonPath to search with
+     * @example FindJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number'
+     * @section Rest Finder - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'number'")
     public Number findJsonElementByJsonPathInRestResponseBodyANumber(final String jsonPath) throws IOException {
         return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(Number.class));
     }
 
+    /**
+     * Find a JSON boolean by the given JsonPath and store it for further inspection.
+     *
+     * @param jsonPath the JsonPath to search with
+     * @example FindJsonElement ByJsonPath '$.someBoolean' in RestResponseBody a 'boolean'
+     * @section Rest Finder - JSON
+     * @see <a href="https://github.com/jayway/JsonPath#getting-started">https://github.com/jayway/JsonPath#getting-started</a>
+     */
     @Step("FindJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'boolean'")
     public Boolean findJsonElementByJsonPathInRestResponseBodyABoolean(final String jsonPath) throws IOException {
         return findJsonElementByJsonPathInRestResponseBodyImpl(jsonPath, isA(Boolean.class));
