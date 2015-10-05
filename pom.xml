@@ -26,7 +26,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>A rest driver implementation that is designed to be used with Substeps, to provide a means of testing rest endpoints.</description>
+    <description>A rest driver implementation for Substeps, to provide a means of testing rest endpoints.</description>
     <url>https://github.com/beercan1989/substeps-restdriver</url>
 
     <parent>
@@ -186,6 +186,28 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                        <tags>
+                            <tag>
+                                <name>example</name>
+                                <placement>m</placement>
+                                <head>Example:</head>
+                            </tag>
+                            <tag>
+                                <name>section</name>
+                                <placement>m</placement>
+                                <head>Section:</head>
+                            </tag>
+                        </tags>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.technophobia.substeps</groupId>

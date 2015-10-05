@@ -73,7 +73,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * Check that the rest response has the expected http status is within the given range.
      *
      * @param expectedMin the minimum expected status code
-     * @param expectedMax the manimum expected status code
+     * @param expectedMax the maximum expected status code
      * @example AssertRestResponse has code between '200' and '299'
      * @section Rest Assertion
      */

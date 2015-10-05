@@ -19,13 +19,6 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl;
 
-import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
-import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
-import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
-import uk.co.baconi.substeps.restdriver.converters.RequestBodyBuilderConverter;
-import uk.co.baconi.substeps.restdriver.converters.ScopeConverter;
-import uk.co.baconi.substeps.restdriver.properties.RestDriverSubstepsConfiguration;
-import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 import com.technophobia.substeps.model.Scope;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
@@ -34,6 +27,13 @@ import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.client.methods.*;
+import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
+import uk.co.baconi.substeps.restdriver.converters.RequestBodyBuilderConverter;
+import uk.co.baconi.substeps.restdriver.converters.ScopeConverter;
+import uk.co.baconi.substeps.restdriver.properties.RestDriverSubstepsConfiguration;
+import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 
 import java.io.IOException;
 import java.util.List;
@@ -291,6 +291,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     /**
      * Execute the current rest request, using config from previous steps and cookies from all available scopes.
      *
+     * @throws IOException
      * @example ExecuteRestRequest with available configuration
      * @section Rest Builder
      */

@@ -19,10 +19,10 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl.json;
 
-import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
-import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
+import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
+import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 
 import java.io.IOException;
 
@@ -40,10 +40,10 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that the rest response body is the given JSON base type.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param type the JsonPath to search with.
+     * @throws IOException
      * @example AssertRestResponseBody is JSON 'object'
      * @section Rest Assertion - JSON
      */
@@ -69,11 +69,11 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the given JsonPath there is a string with the given value.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath      the JsonPath to search with
      * @param expectedValue the expected string to find
+     * @throws IOException
      * @example AssertJsonElement ByJsonPath '$.someString' in RestResponseBody a 'string' with value: test string
      * @section Rest Assertion - JSON
      */
@@ -88,11 +88,11 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the given JsonPath there is a number with the given value.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath      the JsonPath to search with
      * @param expectedValue the expected number to find
+     * @throws IOException
      * @example AssertJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number' with value: 666
      * @section Rest Assertion - JSON
      */
@@ -107,11 +107,11 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the given JsonPath there is a boolean with the given value.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath      the JsonPath to search with
      * @param expectedValue the expected boolean to find
+     * @throws IOException
      * @example AssertJsonElement ByJsonPath '$.someBoolean' in RestResponseBody a 'boolean' with value: false
      * @section Rest Assertion - JSON
      */
@@ -126,12 +126,12 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the given JsonPath there is the given base JSON type.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
      * @param aOrAn    a or an, it doesn't matcher which, only useful for reading and logging
      * @param type     the base JSON type to expect
+     * @throws IOException
      * @example AssertJsonElement ByJsonPath '$.something.someArray' in RestResponseBody an 'array'
      * @section Rest Assertion - JSON
      */
@@ -160,7 +160,6 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the last find by JsonPath there is a string with the given value.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param expectedValue the expected string to find
@@ -178,7 +177,6 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the last find by JsonPath there is a number with the given value.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param expectedValue the expected number to find
@@ -196,7 +194,6 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
 
     /**
      * Assert that at the last find by JsonPath there is a boolean with the given value.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param expectedValue the expected boolean to find

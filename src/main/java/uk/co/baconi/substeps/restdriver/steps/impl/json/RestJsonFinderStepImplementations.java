@@ -19,12 +19,12 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl.json;
 
-import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
-import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 import com.jayway.jsonpath.JsonPath;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import org.hamcrest.Matcher;
+import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
+import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +43,7 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
+     * @throws IOException
      * @example FindJsonElement ByJsonPath '$.someObject' in RestResponseBody an 'object'
      * @section Rest Finder - JSON
      */
@@ -57,6 +58,7 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
+     * @throws IOException
      * @example FindJsonElement ByJsonPath '$.someArray' in RestResponseBody an 'array'
      * @section Rest Finder - JSON
      */
@@ -71,6 +73,7 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
+     * @throws IOException
      * @example FindJsonElement ByJsonPath '$.someString' in RestResponseBody a 'string'
      * @section Rest Finder - JSON
      */
@@ -85,6 +88,7 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
+     * @throws IOException
      * @example FindJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number'
      * @section Rest Finder - JSON
      */
@@ -99,6 +103,7 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
+     * @throws IOException
      * @example FindJsonElement ByJsonPath '$.someBoolean' in RestResponseBody a 'boolean'
      * @section Rest Finder - JSON
      */
