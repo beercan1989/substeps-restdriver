@@ -291,7 +291,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     /**
      * Execute the current rest request, using config from previous steps and cookies from all available scopes.
      *
-     * @throws IOException
+     * @throws IOException if there are problems executing the http request
      * @example ExecuteRestRequest with available configuration
      * @section Rest Builder
      */

@@ -39,11 +39,11 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
 
     /**
      * Find a JSON object by the given JsonPath and store it for further inspection.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
-     * @throws IOException
+     * @return a Map of the JSON element at the given path
+     * @throws IOException if the response body could not be read
      * @example FindJsonElement ByJsonPath '$.someObject' in RestResponseBody an 'object'
      * @section Rest Finder - JSON
      */
@@ -54,11 +54,11 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
 
     /**
      * Find a JSON array by the given JsonPath and store it for further inspection.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
-     * @throws IOException
+     * @return a List of the JSON element at the given path
+     * @throws IOException if the response body could not be read
      * @example FindJsonElement ByJsonPath '$.someArray' in RestResponseBody an 'array'
      * @section Rest Finder - JSON
      */
@@ -69,11 +69,11 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
 
     /**
      * Find a JSON string by the given JsonPath and store it for further inspection.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
-     * @throws IOException
+     * @return a String representation of the JSON element at the given path
+     * @throws IOException if the response body could not be read
      * @example FindJsonElement ByJsonPath '$.someString' in RestResponseBody a 'string'
      * @section Rest Finder - JSON
      */
@@ -84,11 +84,11 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
 
     /**
      * Find a JSON number by the given JsonPath and store it for further inspection.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
-     * @throws IOException
+     * @return a Number representation of the JSON element at the given path
+     * @throws IOException if the response body could not be read
      * @example FindJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number'
      * @section Rest Finder - JSON
      */
@@ -99,11 +99,11 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
 
     /**
      * Find a JSON boolean by the given JsonPath and store it for further inspection.
-     * <p>
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param jsonPath the JsonPath to search with
-     * @throws IOException
+     * @return a Boolean representation of the JSON element at the given path
+     * @throws IOException if the response body could not be read
      * @example FindJsonElement ByJsonPath '$.someBoolean' in RestResponseBody a 'boolean'
      * @section Rest Finder - JSON
      */

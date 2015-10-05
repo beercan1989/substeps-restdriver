@@ -43,7 +43,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
      * @param type the JsonPath to search with.
-     * @throws IOException
+     * @throws IOException if the response body could not be read
      * @example AssertRestResponseBody is JSON 'object'
      * @section Rest Assertion - JSON
      */
@@ -73,7 +73,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      *
      * @param jsonPath      the JsonPath to search with
      * @param expectedValue the expected string to find
-     * @throws IOException
+     * @throws IOException if the response body could not be read
      * @example AssertJsonElement ByJsonPath '$.someString' in RestResponseBody a 'string' with value: test string
      * @section Rest Assertion - JSON
      */
@@ -92,7 +92,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      *
      * @param jsonPath      the JsonPath to search with
      * @param expectedValue the expected number to find
-     * @throws IOException
+     * @throws IOException if the response body could not be read
      * @example AssertJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number' with value: 666
      * @section Rest Assertion - JSON
      */
@@ -111,7 +111,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      *
      * @param jsonPath      the JsonPath to search with
      * @param expectedValue the expected boolean to find
-     * @throws IOException
+     * @throws IOException if the response body could not be read
      * @example AssertJsonElement ByJsonPath '$.someBoolean' in RestResponseBody a 'boolean' with value: false
      * @section Rest Assertion - JSON
      */
@@ -131,7 +131,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      * @param jsonPath the JsonPath to search with
      * @param aOrAn    a or an, it doesn't matcher which, only useful for reading and logging
      * @param type     the base JSON type to expect
-     * @throws IOException
+     * @throws IOException if the response body could not be read
      * @example AssertJsonElement ByJsonPath '$.something.someArray' in RestResponseBody an 'array'
      * @section Rest Assertion - JSON
      */
