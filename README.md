@@ -9,7 +9,24 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 + Java 8
 + Substeps 1.1.2
 
-## Features coming up in 0.0.1
+## Latest version available in Maven Central
+```xml
+    <dependency>
+        <groupId>uk.co.baconi.substeps</groupId>
+        <artifactId>restdriver-substeps</artifactId>
+        <version>0.0.1</version>
+    </dependency>
+```
+
+## Features that might be included in 0.0.2
++ More steps
+    + Finders
+    + Assertions
++ XML Support
++ Bug fixing
++ Other enhancements
+
+## Features in 0.0.1
 + Build rest requests.
 + Add headers in key value pairs.
 + Add cookies in key value pairs.
@@ -30,6 +47,7 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
     + String - both finding and matching, ignoring whitespace
     + Number - both finding and matching, including decimals
 + Examples / documentation on how to use.
++ Available in maven central
 
 ## Useful information
 + Scopes - can be the following values, they are thread safe scopes where data can be stored during substep runs:
