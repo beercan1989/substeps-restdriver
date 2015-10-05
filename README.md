@@ -11,11 +11,11 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 
 ## Latest version available in Maven Central
 ```xml
-    <dependency>
-        <groupId>uk.co.baconi.substeps</groupId>
-        <artifactId>restdriver-substeps</artifactId>
-        <version>0.0.1</version>
-    </dependency>
+<dependency>
+    <groupId>uk.co.baconi.substeps</groupId>
+    <artifactId>restdriver-substeps</artifactId>
+    <version>0.0.1</version>
+</dependency>
 ```
 
 ## Features that might be included in 0.0.2
