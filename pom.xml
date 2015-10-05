@@ -21,7 +21,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>co.uk.baconi.substeps</groupId>
+    <groupId>uk.co.baconi.substeps</groupId>
     <artifactId>restdriver-substeps</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -225,11 +225,11 @@
 
                 <configuration>
                     <stepImplementationClassNames>
-                        <param>co.uk.baconi.substeps.restdriver.steps.impl.RestRequestBuilderStepImplementations</param>
-                        <param>co.uk.baconi.substeps.restdriver.steps.impl.RestAssertionStepImplementations</param>
+                        <param>RestRequestBuilderStepImplementations</param>
+                        <param>RestAssertionStepImplementations</param>
 
-                        <param>co.uk.baconi.substeps.restdriver.steps.impl.json.RestJsonAssertionStepImplementations</param>
-                        <param>co.uk.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplementations</param>
+                        <param>RestJsonAssertionStepImplementations</param>
+                        <param>RestJsonFinderStepImplementations</param>
                     </stepImplementationClassNames>
 
                     <glossaryPublisher implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
