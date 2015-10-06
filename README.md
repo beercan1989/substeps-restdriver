@@ -18,13 +18,16 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 </dependency>
 ```
 
-## Features that might be included in 0.0.2
+## Features that might be included in 0.0.3
 + More steps
     + Finders
     + Assertions
 + XML Support
 + Bug fixing
 + Other enhancements
+
+## Features in 0.0.2
++ Corrections to the glossary metadata, without the fix we cannot build a glossary of the steps in projects that use this library.
 
 ## Features in 0.0.1
 + Build rest requests.
