@@ -226,11 +226,11 @@
 
                 <configuration>
                     <stepImplementationClassNames>
-                        <param>RestRequestBuilderStepImplementations</param>
-                        <param>RestAssertionStepImplementations</param>
+                        <param>uk.co.baconi.substeps.restdriver.steps.impl.RestRequestBuilderStepImplementations</param>
+                        <param>uk.co.baconi.substeps.restdriver.steps.impl.RestAssertionStepImplementations</param>
 
-                        <param>RestJsonAssertionStepImplementations</param>
-                        <param>RestJsonFinderStepImplementations</param>
+                        <param>uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonAssertionStepImplementations</param>
+                        <param>uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplementations</param>
                     </stepImplementationClassNames>
 
                     <glossaryPublisher implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
