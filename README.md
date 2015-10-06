@@ -14,7 +14,7 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 <dependency>
     <groupId>uk.co.baconi.substeps</groupId>
     <artifactId>restdriver-substeps</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 
