@@ -1,0 +1,9 @@
+platform: linux
+
+analyzers:
+  - markdownlint: true
+  
+  - pmd: true
+  
+  - checkstyle: true
+    style: google # | sun
