@@ -1,4 +1,4 @@
-# Substeps RestDriver [![Build Status](https://travis-ci.org/beercan1989/substeps-restdriver.svg?branch=master)](https://travis-ci.org/beercan1989/substeps-restdriver)&nbsp;[![Maven Central](https://img.shields.io/maven-central/v/uk.co.baconi.substeps/restdriver-substeps.png)](https://maven-badges.herokuapp.com/maven-central/uk.co.baconi.substeps/restdriver-substeps)
+# Substeps RestDriver [![Build Status](https://travis-ci.org/beercan1989/substeps-restdriver.svg?branch=master)](https://travis-ci.org/beercan1989/substeps-restdriver)&nbsp;[![Maven Central](https://img.shields.io/maven-central/v/uk.co.baconi.substeps/restdriver-substeps.png)](https://maven-badges.herokuapp.com/maven-central/uk.co.baconi.substeps/restdriver-substeps)&nbsp;[![Codacy Badge](https://api.codacy.com/project/badge/grade/5c6e489d1b714798b474af0464af3945)](https://www.codacy.com/app/beercan1989/substeps-restdriver)
 
 Project to provide a new type of Driver for use with Substeps, that will enable the ability to testing of rest endpoints by creating requests and asserting the responses.
 
