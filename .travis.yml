@@ -7,14 +7,11 @@ jdk:
   
 before_install:
   - pip install --user codecov
-  - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >t.jar
-  - java -jar t.jar init
-  - rm t.jar
-  - jpm install com.codacy:codacy-coverage-reporter:assembly
+  - wget -O codacy-coverage-reporter.jar "http://search.maven.org/remotecontent?filepath=com/codacy/codacy-coverage-reporter/1.0.4/codacy-coverage-reporter-1.0.4-assembly.jar"
 
 after_success:
   - codecov
-  - codacy-coverage-reporter -l Java -r coverage.xml
+  - java -jar codacy-coverage-reporter.jar -l Java -r coverage.xml
 
 branches:
   only:
