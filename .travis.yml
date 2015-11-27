@@ -11,7 +11,7 @@ before_install:
 
 after_success:
   - codecov
-  - java -jar codacy-coverage-reporter.jar -l Java -r coverage.xml
+  - java -jar codacy-coverage-reporter.jar -l Java -r ./target/site/jacoco/jacoco.xml
 
 branches:
   only:
