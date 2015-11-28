@@ -65,8 +65,8 @@ public enum RestDriverSubstepsConfiguration {
 
         this.baseUrl = determineBaseURL(properties.getString("baseUrl"));
 
-        this.connectTimeout = new Long(properties.getDuration("rest.connectTimeout", TimeUnit.MILLISECONDS)).intValue();
-        this.socketTimeout = new Long(properties.getDuration("rest.socketTimeout", TimeUnit.MILLISECONDS)).intValue();
+        this.connectTimeout = Long.valueOf(properties.getDuration("rest.connectTimeout", TimeUnit.MILLISECONDS)).intValue();
+        this.socketTimeout = Long.valueOf(properties.getDuration("rest.socketTimeout", TimeUnit.MILLISECONDS)).intValue();
         this.userAgent = properties.getString("rest.userAgent");
 
         final String proxy = properties.getString("rest.proxy");

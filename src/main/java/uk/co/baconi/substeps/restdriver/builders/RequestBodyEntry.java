@@ -24,7 +24,7 @@ public class RequestBodyEntry {
     private final String key;
     private final String value;
 
-    public RequestBodyEntry(String key, String value) {
+    public RequestBodyEntry(final String key, final String value) {
         this.key = key;
         this.value = value;
     }

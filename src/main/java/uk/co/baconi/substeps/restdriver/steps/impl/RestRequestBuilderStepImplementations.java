@@ -27,6 +27,8 @@ import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.client.methods.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
@@ -40,6 +42,8 @@ import java.util.List;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestRequestBuilderStepImplementations extends AbstractRestDriverSubStepImplementations {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestRequestBuilderStepImplementations.class);
 
     /**
      * Create a new rest request using the given HTTP method and URL. The URL can either be absolute or relative to the
@@ -64,9 +68,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
             fullURL = RestDriverSubstepsConfiguration.PROPERTIES.getBaseUrl() + url;
         }
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Creating new fluent Request with Method [" + method + "], URL [" + fullURL + "].");
-        }
+        LOG.debug("Creating new fluent Request with Method [{}], URL [{}].", method, fullURL);
 
         //
         // Create new Request
@@ -140,7 +142,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest add header with name '([^']+)' and value '([^']+)'")
     public void restRequestAddHeadWithNameAndValue(final String name, final String value) {
 
-        logger.debug("Adding to Request header [" + name + "] with value [" + value + "].");
+        LOG.debug("Adding to Request header [{}] with value [{}].", name, value);
 
         getRequest().addHeader(name, value);
     }
@@ -177,7 +179,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
             final String name, final String value, @StepParameter(converter = ScopeConverter.class) final Scope scope
     ) {
 
-        logger.debug("Adding to Request cookie [" + name + "] with value [" + value + "] in scope [" + scope + "].");
+        LOG.debug("Adding to Request cookie [{}] with value [{}] in scope [{}].", name, value, scope);
 
         addCookie(name, value, scope);
     }
@@ -198,7 +200,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest add data with name '([^']+)' and value '([^']+)'")
     public void restRequestAddDataWithNameAndValue(final String name, final String value) {
 
-        logger.debug("Adding Data for Rest Request with name [" + name + "] and value [" + value + "]");
+        LOG.debug("Adding Data for Rest Request with name [{}] and value [{}]", name, value);
 
         addToRequestBody(name, value);
     }
@@ -214,7 +216,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("NewRestRequestBody using the '(SimpleJsonRequestBodyBuilder|KeyPairRequestBodyBuilder)'")
     public void newRequestBodyUsingThe(@StepParameter(converter = RequestBodyBuilderConverter.class) final RequestBodyBuilder builder) {
 
-        logger.debug("Setting RequestBodyBuilder to [" + builder.getClass().getName() + "]");
+        LOG.debug("Setting RequestBodyBuilder to [{}]", builder.getClass().getName());
 
         setRequestBodyBuilder(builder);
     }
@@ -233,7 +235,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest set user-agent string as '([^']+)'")
     public void restRequestSetUserAgentStringAs(final String userAgent) {
 
-        logger.debug("Setting User Agent on Rest Request as [" + userAgent + "].");
+        LOG.debug("Setting User Agent on Rest Request as [{}].", userAgent);
 
         getRequest().userAgent(userAgent);
     }
@@ -248,7 +250,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest set proxy as '([^']+)'")
     public void restRequestSetProxyAs(final String proxy) {
 
-        logger.debug("Setting Proxy on Rest Request as [" + proxy + "]");
+        LOG.debug("Setting Proxy on Rest Request as [{}]", proxy);
 
         getRequest().viaProxy(proxy);
     }
@@ -263,7 +265,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest set connect timeout as '([0-9]+)'")
     public void restRequestSetConnectTimeoutAs(final int timeout) {
 
-        logger.debug("Setting Connection Timeout on Rest Request as [" + timeout + "]");
+        LOG.debug("Setting Connection Timeout on Rest Request as [{}]", timeout);
 
         getRequest().connectTimeout(timeout);
     }
@@ -278,7 +280,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest set socket timeout as '([0-9]+)'")
     public void restRequestSetSocketTimeoutAs(final int timeout) {
 
-        logger.debug("Setting Socket Timeout on Rest Request as [" + timeout + "]");
+        LOG.debug("Setting Socket Timeout on Rest Request as [{}]", timeout);
 
         getRequest().socketTimeout(timeout);
     }
@@ -298,7 +300,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("ExecuteRestRequest with available configuration")
     public void executeRestRequestWithAvailableConfiguration() throws IOException {
 
-        logger.debug("Executing current Rest Request, with available cookies.");
+        LOG.debug("Executing current Rest Request, with available cookies.");
 
         final Executor executor = Executor.newInstance();
 

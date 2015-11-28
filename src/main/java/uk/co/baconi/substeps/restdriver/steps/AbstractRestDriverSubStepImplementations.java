@@ -19,9 +19,6 @@
 
 package uk.co.baconi.substeps.restdriver.steps;
 
-import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
-import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
-import uk.co.baconi.substeps.restdriver.utils.IOUtil;
 import com.technophobia.substeps.model.Scope;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
@@ -29,8 +26,9 @@ import org.apache.http.client.fluent.Response;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
+import uk.co.baconi.substeps.restdriver.utils.IOUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,8 +48,6 @@ public abstract class AbstractRestDriverSubStepImplementations {
     private static final String CURRENT_REST_RESPONSE = BASE_REST_DRIVER + "CURRENT_REST_RESPONSE";
     private static final String CURRENT_COOKIE_STORE = BASE_REST_DRIVER + "CURRENT_COOKIE_STORE";
     private static final String CURRENT_JSON_ELEMENT = BASE_REST_DRIVER + "CURRENT_JSON_ELEMENT";
-
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     //
     // Request
@@ -238,7 +234,7 @@ public abstract class AbstractRestDriverSubStepImplementations {
     //
     // Helpers
     //
-    protected <A> A getOrThrowError(final String getting, Supplier<Optional<A>> getter) {
+    protected <A> A getOrThrowError(final String getting, final Supplier<Optional<A>> getter) {
         return getter.get().orElseThrow(
                 () -> new AssertionError("Unable to find the [" + getting + "].")
         );

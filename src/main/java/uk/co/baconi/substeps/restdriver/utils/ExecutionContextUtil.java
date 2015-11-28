@@ -35,7 +35,7 @@ public class ExecutionContextUtil {
     public static <A> List<A> getList(final Scope scope, final String key) {
         final Object result = ExecutionContext.get(scope, key);
 
-        if (result != null && result instanceof List) {
+        if (result instanceof List) {
             return (List<A>) result;
         } else {
             return new ArrayList<>();

@@ -18,7 +18,7 @@ public class Result<A> {
 
     private final A result;
 
-    public Result(A result) {
+    public Result(final A result) {
         this.result = result;
     }
 

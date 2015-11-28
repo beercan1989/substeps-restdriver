@@ -21,6 +21,8 @@ package uk.co.baconi.substeps.restdriver.steps.impl.json;
 
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 
@@ -31,6 +33,8 @@ import static org.hamcrest.Matchers.*;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubStepImplementations {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestJsonAssertionStepImplementations.class);
 
     private final RestJsonFinderStepImplementations finderImpl;
 
@@ -50,7 +54,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
     @Step("AssertRestResponseBody is JSON '(object|array)'")
     public void assertRestResponseBodyIsJson(final String type) throws IOException {
 
-        logger.debug("Asserting that the body is a JSON [" + type + "]");
+        LOG.debug("Asserting that the body is a JSON [{}]", type);
 
         switch (type) {
             case "object": {
@@ -79,7 +83,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'string' with value: (.*)")
     public void assertJsonElementByJsonPathInRestResponseBodyAStringWithValue(final String jsonPath, final String expectedValue) throws IOException {
-        logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
+        LOG.debug("Asserting that by JsonPath [{}] there is a string with value: {}", jsonPath, expectedValue);
 
         final String result = finderImpl.findJsonElementByJsonPathInRestResponseBodyAString(jsonPath);
 
@@ -98,7 +102,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'number' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertJsonElementByJsonPathInRestResponseBodyANumberWithValue(final String jsonPath, final double expectedValue) throws IOException {
-        logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
+        LOG.debug("Asserting that by JsonPath [{}] there is a string with value: {}", jsonPath, expectedValue);
 
         final double result = finderImpl.findJsonElementByJsonPathInRestResponseBodyANumber(jsonPath).doubleValue();
 
@@ -117,7 +121,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'boolean' with value: ([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])")
     public void assertJsonElementByJsonPathInRestResponseBodyABooleanWithValue(final String jsonPath, final boolean expectedValue) throws IOException {
-        logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is a string with value: " + expectedValue);
+        LOG.debug("Asserting that by JsonPath [{}] there is a string with value: {}", jsonPath, expectedValue);
 
         final boolean result = finderImpl.findJsonElementByJsonPathInRestResponseBodyABoolean(jsonPath);
 
@@ -137,7 +141,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody (a|an) '(object|array)'")
     public void assertJsonElementByJsonPathInRequestResponseBody(final String jsonPath, final String aOrAn, final String type) throws IOException {
-        logger.debug("Asserting that by JsonPath [" + jsonPath + "] there is " + aOrAn + " [" + type + "]");
+        LOG.debug("Asserting that by JsonPath [{}] there is {} [{}]", jsonPath, aOrAn, type);
 
         switch (type) {
             case "object": {
@@ -168,7 +172,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'string' with value: (.*)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsAStringWithValue(final String expectedValue) {
-        logger.debug("Asserting that JsonElement from RestResponseBody is a string with value: " + expectedValue);
+        LOG.debug("Asserting that JsonElement from RestResponseBody is a string with value: " + expectedValue);
 
         final String currentJsonElement = getCurrentJsonElement(String.class);
 
@@ -185,7 +189,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'number' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsANumberWithValue(final double expectedValue) {
-        logger.debug("Asserting that JsonElement from RestResponseBody is a number with value: " + expectedValue);
+        LOG.debug("Asserting that JsonElement from RestResponseBody is a number with value: " + expectedValue);
 
         final double currentJsonElement = getCurrentJsonElement(Number.class).doubleValue();
 
@@ -202,7 +206,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      */
     @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: ([0-9]+(?:\\.[0-9]+)?)")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsABooleanWithValue(final boolean expectedValue) {
-        logger.debug("Asserting that JsonElement from RestResponseBody is a boolean with value: " + expectedValue);
+        LOG.debug("Asserting that JsonElement from RestResponseBody is a boolean with value: " + expectedValue);
 
         final Boolean currentJsonElement = getCurrentJsonElement(Boolean.class);
 

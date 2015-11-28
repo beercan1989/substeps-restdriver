@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 public class TestApplication {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(TestApplication.class, args);
     }
 

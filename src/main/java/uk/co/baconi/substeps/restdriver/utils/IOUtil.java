@@ -41,7 +41,7 @@ public class IOUtil {
         try (final BufferedReader reader = createBufferedReader(inputStream)) {
             final List<String> result = new ArrayList<>();
             for (; ; ) {
-                String line = reader.readLine();
+                final String line = reader.readLine();
                 if (line == null)
                     break;
                 result.add(line);

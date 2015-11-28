@@ -23,6 +23,8 @@ import com.jayway.jsonpath.JsonPath;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import org.hamcrest.Matcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 
@@ -36,6 +38,8 @@ import static org.hamcrest.Matchers.isA;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStepImplementations {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestJsonFinderStepImplementations.class);
 
     /**
      * Find a JSON object by the given JsonPath and store it for further inspection.
@@ -114,7 +118,7 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
 
     private <A, B extends A> B findJsonElementByJsonPathInRestResponseBodyImpl(final String jsonPath, final Matcher<A> expectedType) throws IOException {
 
-        logger.debug("Find by JsonPath [" + jsonPath + "] and expected type [" + expectedType + "]");
+        LOG.debug("Find by JsonPath [{}] and expected type [{}]", jsonPath, expectedType);
 
         // Find by path
         final B searchedJson = JsonPath.parse(getRawResponseBody()).read(jsonPath);

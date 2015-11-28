@@ -19,6 +19,8 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 import com.technophobia.substeps.model.SubSteps.Step;
@@ -31,6 +33,8 @@ import static org.hamcrest.Matchers.*;
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestAssertionStepImplementations extends AbstractRestDriverSubStepImplementations {
 
+    private static final Logger LOG = LoggerFactory.getLogger(RestAssertionStepImplementations.class);
+
     /**
      * Check that the rest response has the expected http status response code.
      *
@@ -41,7 +45,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
     @Step("AssertRestResponse has code '([0-9]{3})'")
     public void assertRestResponseHasCode(final int expectedStatusCode) {
 
-        logger.debug("Asserting that the response code is a [" + expectedStatusCode + "]");
+        LOG.debug("Asserting that the response code is a [{}]", expectedStatusCode);
 
         final int actualStatusCode = getResponse().getStatusLine().getStatusCode();
 
@@ -59,7 +63,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
     @Step("AssertRestResponse has code '([0-9]{3})' with reason '([^']+)'")
     public void assertRestResponseHasCodeWithReason(final int expectedStatusCode, final String expectedReason) {
 
-        logger.debug("Asserting that the response code is a [" + expectedStatusCode + "] with reason [" + expectedReason + "]");
+        LOG.debug("Asserting that the response code is a [{}] with reason [{}]", expectedStatusCode, expectedReason);
 
         final StatusLine statusLine = getResponse().getStatusLine();
         final int actualStatusCode = statusLine.getStatusCode();
@@ -80,7 +84,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
     @Step("AssertRestResponse has code between '([0-9]{3})' and '([0-9]{3})'")
     public void assertRestResponseHasCodeBetween(final int expectedMin, final int expectedMax) {
 
-        logger.debug("Asserting that the response code is between [" + expectedMin + "] and [" + expectedMax + "]");
+        LOG.debug("Asserting that the response code is between [{}] and [{}]", expectedMin, expectedMax);
 
         final int actualStatusCode = getResponse().getStatusLine().getStatusCode();
 

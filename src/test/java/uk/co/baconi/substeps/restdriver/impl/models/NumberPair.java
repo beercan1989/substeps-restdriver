@@ -30,11 +30,11 @@ public class NumberPair {
         return second;
     }
 
-    public void setFirst(long first) {
+    public void setFirst(final long first) {
         this.first = first;
     }
 
-    public void setSecond(long second) {
+    public void setSecond(final long second) {
         this.second = second;
     }
 
