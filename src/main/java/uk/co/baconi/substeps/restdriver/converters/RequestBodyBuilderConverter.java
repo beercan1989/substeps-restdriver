@@ -50,6 +50,7 @@ public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder
                 }
                 default: {
                     builder = new KeyPairRequestBodyBuilder();
+                    break;
                 }
             }
         }

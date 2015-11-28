@@ -111,11 +111,15 @@ public enum RestDriverSubstepsConfiguration {
     }
 
     private String removeTrailingSlash(final String string) {
+
+        final String result;
         if (string.endsWith("/")) {
-            return string.substring(0, string.length() - 1);
+            result = string.substring(0, string.length() - 1);
         } else {
-            return string;
+            result = string;
         }
+
+        return result;
     }
 
 }
