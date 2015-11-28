@@ -19,10 +19,10 @@
 
 package uk.co.baconi.substeps.restdriver.converters;
 
+import com.technophobia.substeps.model.parameter.Converter;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.impl.KeyPairRequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.impl.SimpleJsonRequestBodyBuilder;
-import com.technophobia.substeps.model.parameter.Converter;
 
 public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder> {
 
@@ -33,18 +33,28 @@ public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder
 
     @Override
     public RequestBodyBuilder convert(final String value) {
+
+        final RequestBodyBuilder builder;
+
         if (value == null) {
-            return new KeyPairRequestBodyBuilder();
+            builder = new KeyPairRequestBodyBuilder();
         } else {
             switch (value) {
-                case "SimpleJsonRequestBodyBuilder":
-                    return new SimpleJsonRequestBodyBuilder();
-                case "KeyPairRequestBodyBuilder":
-                    return new KeyPairRequestBodyBuilder();
-                default:
-                    return new KeyPairRequestBodyBuilder();
+                case "SimpleJsonRequestBodyBuilder": {
+                    builder = new SimpleJsonRequestBodyBuilder();
+                    break;
+                }
+                case "KeyPairRequestBodyBuilder": {
+                    builder = new KeyPairRequestBodyBuilder();
+                    break;
+                }
+                default: {
+                    builder = new KeyPairRequestBodyBuilder();
+                }
             }
         }
+
+        return builder;
     }
 
 }

@@ -100,11 +100,14 @@ public enum RestDriverSubstepsConfiguration {
     private String determineBaseURL(final String baseUrlProperty) {
         final String property = removeTrailingSlash(baseUrlProperty);
 
+        final String baseUrl;
         if (!property.startsWith("http") && !property.startsWith("file://")) {
-            return removeTrailingSlash(new File(property).toURI().toString());
+            baseUrl = removeTrailingSlash(new File(property).toURI().toString());
         } else {
-            return property;
+            baseUrl = property;
         }
+
+        return baseUrl;
     }
 
     private String removeTrailingSlash(final String string) {

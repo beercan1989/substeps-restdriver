@@ -55,11 +55,13 @@ public class TestRestController {
 
     @RequestMapping(value = "/delete-success", method = RequestMethod.DELETE)
     void deleteSuccess() {
+        // This constructor is intentionally empty as its just a test delete endpoint.
     }
 
     @RequestMapping(value = "/delete-failure", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     void deleteFailure() {
+        // This constructor is intentionally empty as its just a test delete endpoint.
     }
 
     @RequestMapping(value = "/post-sum", method = RequestMethod.POST)

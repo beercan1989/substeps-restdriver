@@ -19,9 +19,6 @@ public class NumberPair {
     private long first;
     private long second;
 
-    public NumberPair() {
-    }
-
     public long getFirst() {
         return first;
     }

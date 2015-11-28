@@ -33,23 +33,29 @@ public class ExecutionContextUtil {
 
     @SuppressWarnings("unchecked")
     public static <A> List<A> getList(final Scope scope, final String key) {
-        final Object result = ExecutionContext.get(scope, key);
+        final Object object = ExecutionContext.get(scope, key);
 
-        if (result instanceof List) {
-            return (List<A>) result;
+        final List<A> result;
+        if (object instanceof List) {
+            result = (List<A>) object;
         } else {
-            return new ArrayList<>();
+            result = new ArrayList<>();
         }
+
+        return result;
     }
 
     public static <A> Optional<A> get(final Scope scope, final String key, final Class<A> expectedType) {
-        final Object result = ExecutionContext.get(scope, key);
+        final Object object = ExecutionContext.get(scope, key);
 
-        if (result != null && expectedType.isInstance(result)) {
-            return Optional.of(expectedType.cast(result));
+        final Optional<A> result;
+        if (object != null && expectedType.isInstance(object)) {
+            result = Optional.of(expectedType.cast(object));
         } else {
-            return Optional.empty();
+            result = Optional.empty();
         }
+
+        return result;
     }
 
     public static <A> void put(final Scope scope, final String key, final A value) {
