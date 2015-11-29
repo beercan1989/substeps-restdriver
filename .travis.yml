@@ -12,6 +12,7 @@ before_install:
 after_success:
   - codecov
   - java -jar codacy-coverage-reporter.jar --language Java --coverageReport ./target/site/jacoco/jacoco.xml --prefix src/main/java/
+  - mvn coveralls:report
 
 branches:
   only:
