@@ -1,5 +1,0 @@
-Define: Given I am creating an API GET call to get a '<value>' boolean
-    NewRestRequest as 'GET' to '/get-<value>'
-
-Define: Containing a valid boolean result of <value>
-    AssertJsonElement ByJsonPath '$.result' in RestResponseBody a 'boolean' with value: <value>
