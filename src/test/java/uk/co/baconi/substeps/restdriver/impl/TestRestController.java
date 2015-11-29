@@ -74,14 +74,18 @@ public class TestRestController {
         return new Result<>(first + second);
     }
 
-    @RequestMapping(value = "/get-false", method = RequestMethod.GET)
-    Result<Boolean> getFalse() {
-        return new Result<>(false);
+    @RequestMapping(value = "/get-boolean", method = RequestMethod.GET, params = "value")
+    Result<Boolean> getBoolean(@RequestParam("value") final boolean value) {
+        return new Result<>(value);
     }
 
-    @RequestMapping(value = "/get-true", method = RequestMethod.GET)
-    Result<Boolean> getTrue() {
-        return new Result<>(true);
+    @RequestMapping(value = "/get-number", method = RequestMethod.GET, params = "value")
+    Result<Number> getBoolean(@RequestParam("value") final Number value) {
+        return new Result<>(value);
     }
 
+    @RequestMapping(value = "/get-string", method = RequestMethod.GET, params = "value")
+    Result<String> getBoolean(@RequestParam("value") final String value) {
+        return new Result<>(value);
+    }
 }

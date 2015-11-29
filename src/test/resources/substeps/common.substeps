@@ -9,9 +9,11 @@ Define: And I get a not found response
 
 Define: Containing a valid JSON array
     AssertRestResponseBody is JSON 'array'
+    AssertJsonElement ByJsonPath '$' in RestResponseBody an 'array'
 
 Define: Containing a valid JSON object
     AssertRestResponseBody is JSON 'object'
+    AssertJsonElement ByJsonPath '$' in RestResponseBody an 'object'
 
 Define: With data '<key>' and value '<value>'
     RestRequest add data with name '<key>' and value '<value>'

@@ -204,7 +204,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      * @example AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: true
      * @section Rest Assertion - JSON
      */
-    @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: ([0-9]+(?:\\.[0-9]+)?)")
+    @Step("AssertJsonElement ByPreviousFind in RestResponseBody is a 'boolean' with value: ([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])")
     public void assertCurrentJsonElementByPreviousFindInRestResponseBodyIsABooleanWithValue(final boolean expectedValue) {
         LOG.debug("Asserting that JsonElement from RestResponseBody is a boolean with value: " + expectedValue);
 
