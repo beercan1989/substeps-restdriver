@@ -38,57 +38,95 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
     /**
      * Check that the rest response has the expected http status response code.
      *
-     * @param expectedStatusCode the expected status code
+     * @param statusCode the expected status code
      * @example AssertRestResponse has code '200'
      * @section Rest Assertion
      */
     @Step("AssertRestResponse has code '([0-9]{3})'")
-    public void assertRestResponseHasCode(final int expectedStatusCode) {
+    public void assertRestResponseHasCode(final int statusCode) {
 
-        LOG.debug("Asserting that the response code is a [{}]", expectedStatusCode);
+        LOG.debug("Asserting that the response code is a [{}]", statusCode);
 
-        final int actualStatusCode = getResponse().getStatusLine().getStatusCode();
-
-        assertThat(actualStatusCode, is(equalTo(expectedStatusCode)));
+        getResponse().statusCode(is(equalTo(statusCode)));
     }
 
     /**
      * Check that the rest response has the expected http status response code with expected reason.
      *
-     * @param expectedStatusCode the expected status code
-     * @param expectedReason     the expected reason
+     * @param statusCode the expected status code
+     * @param reason     the expected reason
      * @example AssertRestResponse has code '200' with reason 'OK'
      * @section Rest Assertion
      */
     @Step("AssertRestResponse has code '([0-9]{3})' with reason '([^']+)'")
-    public void assertRestResponseHasCodeWithReason(final int expectedStatusCode, final String expectedReason) {
+    public void assertRestResponseHasCodeWithReason(final int statusCode, final String reason) {
 
-        LOG.debug("Asserting that the response code is a [{}] with reason [{}]", expectedStatusCode, expectedReason);
+        LOG.debug("Asserting that the response code is a [{}] with reason [{}]", statusCode, reason);
 
-        final StatusLine statusLine = getResponse().getStatusLine();
-        final int actualStatusCode = statusLine.getStatusCode();
-        final String reasonPhrase = statusLine.getReasonPhrase();
-
-        assertThat(actualStatusCode, is(equalTo(expectedStatusCode)));
-        assertThat(reasonPhrase, is(equalTo(expectedReason)));
+        getResponse().statusCode(is(equalTo(statusCode)));
+        getResponse().statusLine(is(equalTo(reason)));
     }
 
     /**
      * Check that the rest response has the expected http status is within the given range.
      *
-     * @param expectedMin the minimum expected status code
-     * @param expectedMax the maximum expected status code
+     * @param statusMin the minimum expected status code
+     * @param statusMax the maximum expected status code
      * @example AssertRestResponse has code between '200' and '299'
      * @section Rest Assertion
      */
     @Step("AssertRestResponse has code between '([0-9]{3})' and '([0-9]{3})'")
-    public void assertRestResponseHasCodeBetween(final int expectedMin, final int expectedMax) {
+    public void assertRestResponseHasCodeBetween(final int statusMin, final int statusMax) {
 
-        LOG.debug("Asserting that the response code is between [{}] and [{}]", expectedMin, expectedMax);
+        LOG.debug("Asserting that the response code is between [{}] and [{}]", statusMin, statusMax);
 
-        final int actualStatusCode = getResponse().getStatusLine().getStatusCode();
-
-        assertThat(actualStatusCode, is(both(greaterThanOrEqualTo(expectedMin)).and(lessThanOrEqualTo(expectedMax))));
+        getResponse().statusCode(is(both(greaterThanOrEqualTo(statusMin)).and(lessThanOrEqualTo(statusMax))));
     }
 
+    /**
+     * Check that the rest response has the expected http header with the given value.
+     *
+     * @param headerName the header name
+     * @param headerValue the header value
+     * @example AssertRestResponse has header of name 'name' with value 'bob'
+     * @section Rest Assertion
+     */
+    @Step("AssertRestResponse has header of name '([^']+)' with value '([^']*)'")
+    public void assertResponseHasHeaderWithValue(final String headerName, final String headerValue) {
+
+        LOG.debug("Asserting that there is a response header of name [{}] with value [{}]", headerName, headerValue);
+
+        getResponse().header(headerName, headerValue);
+    }
+
+    /**
+     * Check that the rest response has the expected http header with a predetermined state.
+     *
+     * @param headerName the header name
+     * @param headerValueState the predetermined state for the value
+     * @example AssertRestResponse has header of name 'name' with 'any' value
+     * @section Rest Assertion
+     */
+    @Step("AssertRestResponse has header of name '([^']+)' with '(any|no|blank)' value")
+    public void assertResponseHasHeader(final String headerName, final String headerValueState) {
+
+        LOG.debug("Asserting that there is a response header of name [{}], with built in checking for [{}]", headerName, headerValueState);
+
+        switch (headerValueState) {
+            case "any": {
+                getResponse().header(headerName, is(not(nullValue())));
+                break;
+            }
+            case "no": {
+                getResponse().header(headerName, is(nullValue()));
+                break;
+            }
+            case "blank": {
+                getResponse().header(headerName, isEmptyString());
+            }
+            default: {
+                throw new AssertionError("Unsupported Type ["+headerValueState+"]");
+            }
+        }
+    }
 }

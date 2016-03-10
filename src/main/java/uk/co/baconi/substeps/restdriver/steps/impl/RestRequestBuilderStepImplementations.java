@@ -19,13 +19,13 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl;
 
+import com.jayway.restassured.config.RestAssuredConfig;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 import com.technophobia.substeps.model.Scope;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import com.technophobia.substeps.model.SubSteps.StepParameter;
-import org.apache.http.client.fluent.Executor;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
 import org.apache.http.client.methods.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +46,19 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     private static final Logger LOG = LoggerFactory.getLogger(RestRequestBuilderStepImplementations.class);
 
     /**
+     * Setups up a new rest request and throws away any that are in the current scenario scope.
+     *
+     * @example RestRequest setup new request
+     * @section Rest Builder
+     */
+    @Step("RestRequest setup new request")
+    public void restRequestSetupNewRequest() {
+        setRequest(createNewRequest());
+
+        // TODO - Consider resetting other parts?
+    }
+
+    /**
      * Create a new rest request using the given HTTP method and URL. The URL can either be absolute or relative to the
      * base url in the properties.
      *
@@ -55,56 +68,72 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example NewRestRequest as 'GET' to 'http://localhost:9000/get-stuff'
      * @section Rest Builder
      */
-    @Step("NewRestRequest as '(DELETE|GET|HEAD|OPTIONS|PATCH|POST|PUT|TRACE)' to '([^']+)'")
-    public void newRequestAsMethodToUrl(final String method, final String url) {
+    @Step("RestRequest perform '(DELETE|GET|HEAD|OPTIONS|PATCH|POST|PUT)' on '([^']+)'")
+    public void restRequestPerformMethodOnUrl(final String method, final String url) throws IOException {
+
+        // TODO - Support path parameter substitution, another method would be best.
+
+        final RequestSpecification request = getRequest();
 
         //
         // Create a URL comprising of the Base URL and the value passed in.
         //
-        final String fullURL;
+        final String fullUrl;
         if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("file://")) {
-            fullURL = url;
+            fullUrl = url;
         } else {
-            fullURL = RestDriverSubstepsConfiguration.PROPERTIES.getBaseUrl() + url;
+            fullUrl = RestDriverSubstepsConfiguration.PROPERTIES.getBaseUrl() + url;
         }
 
-        LOG.debug("Creating new fluent Request with Method [{}], URL [{}].", method, fullURL);
+        LOG.debug("Creating new fluent Request with Method [{}], URL [{}].", method, fullUrl);
+
+        //
+        // Load in all the CookieStores for each Scope available.
+        //
+        request.cookies(getCookieStores());
+
+        //
+        // Add the Request Body data to the request.
+        //
+        final List<RequestBodyEntry> requestBody = getRequestBodyData();
+        if (!requestBody.isEmpty()) {
+
+            // This will explode if the 'NewRequestBody using <RequestBodyBuilder>' step hasn't been run.
+            final RequestBodyBuilder bodyBuilder = getRequestBodyBuilder();
+            bodyBuilder.build(request, requestBody);
+        }
 
         //
         // Create new Request
         //
-        final Request newRequest;
+        final Response response;
         switch (method.toUpperCase()) {
             case HttpDelete.METHOD_NAME: {
-                newRequest = Request.Delete(fullURL);
+                response = request.delete(fullUrl);
                 break;
             }
             case HttpGet.METHOD_NAME: {
-                newRequest = Request.Get(fullURL);
+                response = request.get(fullUrl);
                 break;
             }
             case HttpHead.METHOD_NAME: {
-                newRequest = Request.Head(fullURL);
+                response = request.head(fullUrl);
                 break;
             }
             case HttpOptions.METHOD_NAME: {
-                newRequest = Request.Options(fullURL);
+                response = request.options(fullUrl);
                 break;
             }
             case HttpPatch.METHOD_NAME: {
-                newRequest = Request.Patch(fullURL);
+                response = request.patch(fullUrl);
                 break;
             }
             case HttpPost.METHOD_NAME: {
-                newRequest = Request.Post(fullURL);
+                response = request.post(fullUrl);
                 break;
             }
             case HttpPut.METHOD_NAME: {
-                newRequest = Request.Put(fullURL);
-                break;
-            }
-            case HttpTrace.METHOD_NAME: {
-                newRequest = Request.Trace(fullURL);
+                response = request.put(fullUrl);
                 break;
             }
             default: {
@@ -113,17 +142,9 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         }
 
         //
-        // Setup default values from properties.
-        //
-        newRequest.connectTimeout(RestDriverSubstepsConfiguration.PROPERTIES.getConnectTimeout());
-        newRequest.socketTimeout(RestDriverSubstepsConfiguration.PROPERTIES.getSocketTimeout());
-        newRequest.userAgent(RestDriverSubstepsConfiguration.PROPERTIES.getUserAgent());
-        RestDriverSubstepsConfiguration.PROPERTIES.getProxy().ifPresent(newRequest::viaProxy);
-
-        //
         // Set the Request on the Scenario scope.
         //
-        setRequest(newRequest);
+        setResponse(response.then());
     }
 
 
@@ -144,7 +165,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
 
         LOG.debug("Adding to Request header [{}] with value [{}].", name, value);
 
-        getRequest().addHeader(name, value);
+        getRequest().header(name, value);
     }
 
 
@@ -202,7 +223,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
 
         LOG.debug("Adding Data for Rest Request with name [{}] and value [{}]", name, value);
 
-        addToRequestBody(name, value);
+        addToRequestBodyData(name, value);
     }
 
     /**
@@ -237,7 +258,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
 
         LOG.debug("Setting User Agent on Rest Request as [{}].", userAgent);
 
-        getRequest().userAgent(userAgent);
+        getRequest().header("User-Agent", RestDriverSubstepsConfiguration.PROPERTIES.getUserAgent());
     }
 
     /**
@@ -252,7 +273,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
 
         LOG.debug("Setting Proxy on Rest Request as [{}]", proxy);
 
-        getRequest().viaProxy(proxy);
+        getRequest().proxy(proxy);
     }
 
     /**
@@ -262,12 +283,13 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example RestRequest set connect timeout as '5000'
      * @section Rest Builder
      */
-    @Step("RestRequest set connect timeout as '([0-9]+)'")
+    // @Step("RestRequest set connect timeout as '([0-9]+)'")
     public void restRequestSetConnectTimeoutAs(final int timeout) {
 
         LOG.debug("Setting Connection Timeout on Rest Request as [{}]", timeout);
 
-        getRequest().connectTimeout(timeout);
+        // TODO - Work out how
+        //getRequest().connectTimeout(timeout);
     }
 
     /**
@@ -277,49 +299,12 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example RestRequest set connect timeout as '5000'
      * @section Rest Builder
      */
-    @Step("RestRequest set socket timeout as '([0-9]+)'")
+    //@Step("RestRequest set socket timeout as '([0-9]+)'")
     public void restRequestSetSocketTimeoutAs(final int timeout) {
 
         LOG.debug("Setting Socket Timeout on Rest Request as [{}]", timeout);
 
-        getRequest().socketTimeout(timeout);
-    }
-
-
-    //
-    // Executing Request
-    //
-
-    /**
-     * Execute the current rest request, using config from previous steps and cookies from all available scopes.
-     *
-     * @throws IOException if there are problems executing the http request
-     * @example ExecuteRestRequest with available configuration
-     * @section Rest Builder
-     */
-    @Step("ExecuteRestRequest with available configuration")
-    public void executeRestRequestWithAvailableConfiguration() throws IOException {
-
-        LOG.debug("Executing current Rest Request, with available cookies.");
-
-        final Executor executor = Executor.newInstance();
-
-        // Load in all the CookieStores for each Scope available.
-        executor.use(getCookieStores());
-
-        final Request request = getRequest();
-
-        // Add the Request Body data to the request.
-        final List<RequestBodyEntry> requestBody = getRequestBody();
-        if (!requestBody.isEmpty()) {
-
-            // This will explode if the 'NewRequestBody using <RequestBodyBuilder>' step hasn't been run.
-            final RequestBodyBuilder bodyBuilder = getRequestBodyBuilder();
-            bodyBuilder.build(request, requestBody);
-        }
-
-        // Attempt to execute Request and Save response or throw the error
-        final Response response = executor.execute(request);
-        setResponse(response);
+        // TODO - Work out how
+        //getRequest().socketTimeout(timeout);
     }
 }
