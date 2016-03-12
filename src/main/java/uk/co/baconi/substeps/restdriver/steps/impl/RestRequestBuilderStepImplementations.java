@@ -234,8 +234,8 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example NewRestRequestBody using the 'SimpleJsonRequestBodyBuilder'
      * @section Rest Builder
      */
-    @Step("NewRestRequestBody using the '(SimpleJsonRequestBodyBuilder|KeyPairRequestBodyBuilder)'")
-    public void newRequestBodyUsingThe(@StepParameter(converter = RequestBodyBuilderConverter.class) final RequestBodyBuilder builder) {
+    @Step("RestRequest build body using the '(SimpleJsonRequestBodyBuilder|KeyPairRequestBodyBuilder)'")
+    public void restRequestBuildBodyUsingThe(@StepParameter(converter = RequestBodyBuilderConverter.class) final RequestBodyBuilder builder) {
 
         LOG.debug("Setting RequestBodyBuilder to [{}]", builder.getClass().getName());
 

@@ -107,7 +107,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * @example AssertRestResponse has header of name 'name' with 'any' value
      * @section Rest Assertion
      */
-    @Step("AssertRestResponse has header of name '([^']+)' with '(any|no|blank)' value")
+    @Step("AssertRestResponse has header of name '([^']+)' with '(any|no|blank|non-blank)' value")
     public void assertResponseHasHeader(final String headerName, final String headerValueState) {
 
         LOG.debug("Asserting that there is a response header of name [{}], with built in checking for [{}]", headerName, headerValueState);
@@ -123,6 +123,11 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
             }
             case "blank": {
                 getResponse().header(headerName, isEmptyString());
+                break;
+            }
+            case "non-blank": {
+                getResponse().header(headerName, not(isEmptyString()));
+                break;
             }
             default: {
                 throw new AssertionError("Unsupported Type ["+headerValueState+"]");
