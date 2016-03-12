@@ -14,17 +14,19 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 <dependency>
     <groupId>uk.co.baconi.substeps</groupId>
     <artifactId>restdriver-substeps</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 
-## Features that might be included in 0.0.3
-+ More steps
-    + Finders
-    + Assertions
+## Features that might be included in the future
 + XML Support
 + Bug fixing
 + Other enhancements
+
+## Features in 0.0.3
++ More finders
++ More assertions
++ Move to using rest assured for the requesting and asserting
 
 ## Features in 0.0.2
 + Corrections to the glossary metadata, without the fix we cannot build a glossary of the steps in projects that use this library.
