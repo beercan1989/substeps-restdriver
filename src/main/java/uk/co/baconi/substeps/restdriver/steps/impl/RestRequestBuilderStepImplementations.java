@@ -283,14 +283,14 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example RestRequest set connect timeout as '5000'
      * @section Rest Builder
      */
-    // @Step("RestRequest set connect timeout as '([0-9]+)'")
-    public void restRequestSetConnectTimeoutAs(final int timeout) {
-
-        LOG.debug("Setting Connection Timeout on Rest Request as [{}]", timeout);
-
-        // TODO - Work out how
-        //getRequest().connectTimeout(timeout);
-    }
+//    @Step("RestRequest set connect timeout as '([0-9]+)'")
+//    public void restRequestSetConnectTimeoutAs(final int timeout) {
+//
+//        LOG.debug("Setting Connection Timeout on Rest Request as [{}]", timeout);
+//
+//        // TODO - Work out how
+//        getRequest().connectTimeout(timeout);
+//    }
 
     /**
      * Set the socket timeout for the current rest request.
@@ -299,12 +299,12 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example RestRequest set connect timeout as '5000'
      * @section Rest Builder
      */
-    //@Step("RestRequest set socket timeout as '([0-9]+)'")
-    public void restRequestSetSocketTimeoutAs(final int timeout) {
-
-        LOG.debug("Setting Socket Timeout on Rest Request as [{}]", timeout);
-
-        // TODO - Work out how
-        //getRequest().socketTimeout(timeout);
-    }
+//    @Step("RestRequest set socket timeout as '([0-9]+)'")
+//    public void restRequestSetSocketTimeoutAs(final int timeout) {
+//
+//        LOG.debug("Setting Socket Timeout on Rest Request as [{}]", timeout);
+//
+//        // TODO - Work out how
+//        getRequest().socketTimeout(timeout);
+//    }
 }

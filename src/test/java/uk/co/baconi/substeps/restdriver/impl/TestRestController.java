@@ -14,6 +14,7 @@
 
 package uk.co.baconi.substeps.restdriver.impl;
 
+import org.springframework.http.ResponseEntity;
 import uk.co.baconi.substeps.restdriver.impl.models.Result;
 import uk.co.baconi.substeps.restdriver.impl.models.Stuff;
 import uk.co.baconi.substeps.restdriver.impl.models.NumberPair;
@@ -87,5 +88,22 @@ public class TestRestController {
     @RequestMapping(value = "/get-string", method = RequestMethod.GET, params = "value")
     Result<String> getBoolean(@RequestParam("value") final String value) {
         return new Result<>(value);
+    }
+
+    @RequestMapping("/any")
+    @ResponseStatus(HttpStatus.OK)
+    void any() {
+        // This constructor is intentionally empty as its just a test delete endpoint.
+    }
+
+    @RequestMapping("/replay-header")
+    ResponseEntity<Void> replayHeader(@RequestHeader("replay") final String header) {
+        return ResponseEntity.ok().header("replayed", header).build();
+    }
+
+    @RequestMapping("/replay-cookie")
+    @ResponseStatus(HttpStatus.OK)
+    Result<String> replayCookie(@CookieValue("replay") final String cookie) {
+        return new Result<>(cookie);
     }
 }
