@@ -19,22 +19,17 @@
 
 package uk.co.baconi.substeps.restdriver.steps;
 
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.ValidatableResponse;
+import com.jayway.restassured.specification.RequestSpecification;
 import com.technophobia.substeps.model.Scope;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.cookie.BasicClientCookie;
+
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
-import uk.co.baconi.substeps.restdriver.utils.IOUtil;
+import uk.co.baconi.substeps.restdriver.properties.RestDriverSubstepsConfiguration;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static uk.co.baconi.substeps.restdriver.utils.ExecutionContextUtil.*;
@@ -42,60 +37,75 @@ import static uk.co.baconi.substeps.restdriver.utils.ExecutionContextUtil.*;
 public abstract class AbstractRestDriverSubStepImplementations {
 
     private static final String BASE_REST_DRIVER = "REST_DRIVER_";
-    private static final String CURRENT_REST_REQUEST = BASE_REST_DRIVER + "CURRENT_REST_REQUEST";
-    private static final String CURRENT_REST_REQUEST_BODY = BASE_REST_DRIVER + "CURRENT_REST_REQUEST_BODY";
-    private static final String CURRENT_REST_REQUEST_BUILDER = BASE_REST_DRIVER + "CURRENT_REST_REQUEST_BUILDER";
-    private static final String CURRENT_REST_RESPONSE = BASE_REST_DRIVER + "CURRENT_REST_RESPONSE";
-    private static final String CURRENT_COOKIE_STORE = BASE_REST_DRIVER + "CURRENT_COOKIE_STORE";
-    private static final String CURRENT_JSON_ELEMENT = BASE_REST_DRIVER + "CURRENT_JSON_ELEMENT";
+    private static final String REQUEST = BASE_REST_DRIVER + "REQUEST";
+    private static final String REQUEST_BODY_DATA = BASE_REST_DRIVER + "REQUEST_BODY_DATA";
+    private static final String CURRENT_REST_REQUEST_BUILDER = BASE_REST_DRIVER + "REQUEST_BODY_BUILDER";
+    private static final String CURRENT_REST_RESPONSE = BASE_REST_DRIVER + "RESPONSE";
+    private static final String CURRENT_COOKIE_STORE = BASE_REST_DRIVER + "COOKIES";
+    //private static final String CURRENT_JSON_ELEMENT = BASE_REST_DRIVER + "CURRENT_JSON_ELEMENT";
 
     //
     // Request
     //
-    protected void setRequest(final Request request) {
+    protected void setRequest(final RequestSpecification request) {
         setRequest(request, Scope.SCENARIO);
     }
 
-    protected void setRequest(final Request request, final Scope scope) {
-        put(scope, CURRENT_REST_REQUEST, request);
+    protected void setRequest(final RequestSpecification request, final Scope scope) {
+        put(scope, REQUEST, request);
     }
 
-    protected Request getRequest() {
+    protected RequestSpecification getRequest() {
         return getRequest(Scope.SCENARIO);
     }
 
-    protected Request getRequest(final Scope scope) {
-        return getOrThrowError("RestRequest", () -> get(scope, CURRENT_REST_REQUEST, Request.class));
+    protected RequestSpecification getRequest(final Scope scope) {
+        return get(scope, REQUEST, RequestSpecification.class).orElseGet(this::createNewRequest);
+    }
+
+    protected RequestSpecification createNewRequest() {
+
+        RequestSpecification request = RestAssured.given();
+
+        //
+        // Setup default values from properties.
+        //
+        //response.connectTimeout(RestDriverSubstepsConfiguration.PROPERTIES.getConnectTimeout());
+        //response.socketTimeout(RestDriverSubstepsConfiguration.PROPERTIES.getSocketTimeout());
+        request.header("User-Agent", RestDriverSubstepsConfiguration.PROPERTIES.getUserAgent());
+        RestDriverSubstepsConfiguration.PROPERTIES.getProxy().ifPresent(request::proxy);
+
+        return request;
     }
 
 
     //
     // Request Body
     //
-    protected void addToRequestBody(final String key, final String value) {
-        addToRequestBody(new RequestBodyEntry(key, value));
+    protected void addToRequestBodyData(final String key, final String value) {
+        addToRequestBodyData(new RequestBodyEntry(key, value));
     }
 
-    protected void addToRequestBody(final RequestBodyEntry entry) {
-        final List<RequestBodyEntry> requestBody = getRequestBody();
+    protected void addToRequestBodyData(final RequestBodyEntry entry) {
+        final List<RequestBodyEntry> requestBody = getRequestBodyData();
         requestBody.add(entry);
-        setRequestBody(requestBody);
+        setRequestBodyData(requestBody);
     }
 
-    protected void setRequestBody(final List<RequestBodyEntry> body) {
-        setRequestBody(Scope.SCENARIO, body);
+    protected void setRequestBodyData(final List<RequestBodyEntry> body) {
+        setRequestBodyData(Scope.SCENARIO, body);
     }
 
-    protected void setRequestBody(final Scope scope, final List<RequestBodyEntry> body) {
-        put(scope, CURRENT_REST_REQUEST_BODY, body);
+    protected void setRequestBodyData(final Scope scope, final List<RequestBodyEntry> body) {
+        put(scope, REQUEST_BODY_DATA, body);
     }
 
-    protected List<RequestBodyEntry> getRequestBody() {
-        return getRequestBody(Scope.SCENARIO);
+    protected List<RequestBodyEntry> getRequestBodyData() {
+        return getRequestBodyData(Scope.SCENARIO);
     }
 
-    protected List<RequestBodyEntry> getRequestBody(final Scope scope) {
-        return getList(scope, CURRENT_REST_REQUEST_BODY);
+    protected List<RequestBodyEntry> getRequestBodyData(final Scope scope) {
+        return getList(scope, REQUEST_BODY_DATA);
     }
 
 
@@ -122,113 +132,98 @@ public abstract class AbstractRestDriverSubStepImplementations {
     //
     // Response
     //
-    protected void setResponse(final Response response) throws IOException {
+    protected void setResponse(final ValidatableResponse response) throws IOException {
         setResponse(response, Scope.SCENARIO);
     }
 
-    protected void setResponse(final Response response, final Scope scope) throws IOException {
-        put(scope, CURRENT_REST_RESPONSE, response.returnResponse());
+    protected void setResponse(final ValidatableResponse response, final Scope scope) throws IOException {
+        put(scope, CURRENT_REST_RESPONSE, response);
     }
 
-    protected HttpResponse getResponse() {
+    protected ValidatableResponse getResponse() {
         return getResponse(Scope.SCENARIO);
     }
 
-    protected HttpResponse getResponse(final Scope scope) {
-        return getOrThrowError("RestResponse", () -> get(scope, CURRENT_REST_RESPONSE, HttpResponse.class));
+    protected ValidatableResponse getResponse(final Scope scope) {
+        return getOrThrowError("RestResponse", () -> get(scope, CURRENT_REST_RESPONSE, ValidatableResponse.class));
     }
 
 
     //
     // Response Body
     //
-    protected String getResponseBody() throws IOException {
-        return getResponseBody(Scope.SCENARIO);
-    }
+//    protected String getResponseBody() throws IOException {
+//        return getResponseBody(Scope.SCENARIO);
+//    }
 
-    protected String getResponseBody(final Scope scope) throws IOException {
-        return IOUtil.readAll(getRawResponseBody(scope));
-    }
+//    protected String getResponseBody(final Scope scope) throws IOException {
+//        return IOUtil.readAll(getRawResponseBody(scope));
+//    }
 
-    protected InputStream getRawResponseBody() throws IOException {
-        return getRawResponseBody(Scope.SCENARIO);
-    }
+//    protected InputStream getRawResponseBody() throws IOException {
+//        return getRawResponseBody(Scope.SCENARIO);
+//    }
 
-    protected InputStream getRawResponseBody(final Scope scope) throws IOException {
-        return getResponse(scope).getEntity().getContent();
-    }
+//    protected InputStream getRawResponseBody(final Scope scope) throws IOException {
+//        return getResponse(scope).getEntity().getContent();
+//    }
 
 
     //
     // Cookies
     //
-    protected void addCookie(final String name, final String value) {
-        addCookie(name, value, Scope.SCENARIO);
-    }
-
-    protected void addCookie(final Cookie cookie) {
-        addCookie(cookie, Scope.SCENARIO);
-    }
-
     protected void addCookie(final String name, final String value, final Scope scope) {
-        addCookie(new BasicClientCookie(name, value), scope);
-    }
-
-    protected void addCookie(final Cookie cookie, final Scope scope) {
-        final BasicCookieStore cookieStore = getCookieStore(scope).orElseGet(BasicCookieStore::new);
-        cookieStore.addCookie(cookie);
+        final Map<String, String> cookieStore = getCookieStore(scope);
+        cookieStore.put(name, value);
         setCookieStore(cookieStore, scope);
     }
 
-    protected void setCookieStore(final BasicCookieStore cookieStore) {
+    protected void setCookieStore(final Map<String, String> cookieStore) {
         setCookieStore(cookieStore, Scope.SCENARIO);
     }
 
-    protected void setCookieStore(final BasicCookieStore cookieStore, final Scope scope) {
+    protected void setCookieStore(final Map<String, String> cookieStore, final Scope scope) {
         put(scope, CURRENT_COOKIE_STORE, cookieStore);
     }
 
-    protected BasicCookieStore getCookieStores() {
+    protected Map<String, String> getCookieStores() {
         return EnumSet.
                 allOf(Scope.class).
                 stream().
                 map(
                         this::getCookieStore
                 ).
-                map(
-                        store -> store.orElseGet(BasicCookieStore::new)
-                ).
-                reduce(new BasicCookieStore(),
+                reduce(new HashMap<String, String>(),
                         (result, entry) -> {
-                            result.getCookies().addAll(entry.getCookies());
+                            result.putAll(entry);
                             return result;
                         }
                 );
     }
 
-    protected Optional<BasicCookieStore> getCookieStore(final Scope scope) {
-        return get(scope, CURRENT_COOKIE_STORE, BasicCookieStore.class);
+    protected Map<String, String> getCookieStore(final Scope scope) {
+        return getMap(scope, CURRENT_COOKIE_STORE);
     }
 
 
     //
     // JSON
     //
-    protected <A> void setCurrentJsonElement(final A element) {
-        setCurrentJsonElement(element, Scope.SCENARIO);
-    }
-
-    protected <A> void setCurrentJsonElement(final A element, final Scope scope) {
-        put(scope, CURRENT_JSON_ELEMENT, element);
-    }
-
-    protected <A> A getCurrentJsonElement(final Class<A> expectedType) {
-        return getCurrentJsonElement(expectedType, Scope.SCENARIO);
-    }
-
-    protected <A> A getCurrentJsonElement(final Class<A> expectedType, final Scope scope) {
-        return getOrThrowError("CurrentJsonElement", () -> get(scope, CURRENT_JSON_ELEMENT, expectedType));
-    }
+//    protected <A> void setCurrentJsonElement(final A element) {
+//        setCurrentJsonElement(element, Scope.SCENARIO);
+//    }
+//
+//    protected <A> void setCurrentJsonElement(final A element, final Scope scope) {
+//        put(scope, CURRENT_JSON_ELEMENT, element);
+//    }
+//
+//    protected <A> A getCurrentJsonElement(final Class<A> expectedType) {
+//        return getCurrentJsonElement(expectedType, Scope.SCENARIO);
+//    }
+//
+//    protected <A> A getCurrentJsonElement(final Class<A> expectedType, final Scope scope) {
+//        return getOrThrowError("CurrentJsonElement", () -> get(scope, CURRENT_JSON_ELEMENT, expectedType));
+//    }
 
 
     //
