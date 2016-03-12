@@ -1,9 +1,10 @@
 Define: Given I am creating an API call to get a list of strings
-    NewRestRequest as 'GET' to '/get-list-of-string'
+    RestRequest setup new request
+    RestRequest perform 'GET' on '/get-list-of-string'
 
 Define: Containing list of some strings
-    AssertJsonElement ByJsonPath '$[0]' in RestResponseBody a 'string' with value: Stuff 1
-    AssertJsonElement ByJsonPath '$[1]' in RestResponseBody a 'string' with value: Stuff 2
-    AssertJsonElement ByJsonPath '$[2]' in RestResponseBody a 'string' with value: Stuff 3
-    AssertJsonElement ByJsonPath '$[3]' in RestResponseBody a 'string' with value: Stuff 4
-    AssertJsonElement ByJsonPath '$[4]' in RestResponseBody a 'string' with value: Stuff 5
+    AssertJsonElement ByJsonPath '[0]' in RestResponseBody a 'string' with value: Stuff 1
+    AssertJsonElement ByJsonPath '[1]' in RestResponseBody a 'string' with value: Stuff 2
+    AssertJsonElement ByJsonPath '[2]' in RestResponseBody a 'string' with value: Stuff 3
+    AssertJsonElement ByJsonPath '[3]' in RestResponseBody a 'string' with value: Stuff 4
+    AssertJsonElement ByJsonPath '[4]' in RestResponseBody a 'string' with value: Stuff 5

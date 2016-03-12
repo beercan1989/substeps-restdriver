@@ -19,25 +19,20 @@
 
 package uk.co.baconi.substeps.restdriver.builders.impl;
 
+import com.jayway.restassured.specification.RequestSpecification;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class KeyPairRequestBodyBuilder implements RequestBodyBuilder {
 
-    public void build(final Request request, final List<RequestBodyEntry> data) {
-        request.bodyForm(
-                data.stream().map(
-                        entry -> new BasicNameValuePair(
-                                entry.getKey(),
-                                entry.getValue()
-                        )
-                ).collect(
-                        Collectors.toList()
+    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
+
+        data.forEach(entry ->
+                request.formParam(
+                        entry.getKey(),
+                        entry.getValue()
                 )
         );
     }

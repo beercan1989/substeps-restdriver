@@ -1,6 +1,7 @@
 Define: Given I am creating an API GET call to get a '<value>' '<type>'
-    NewRestRequest as 'GET' to '/get-<type>?value=<value>'
+    RestRequest setup new request
+    RestRequest perform 'GET' on '/get-<type>?value=<value>'
 
 Define: Containing a valid '<type>' result of '<value>'
-    AssertJsonElement ByJsonPath '$.result' in RestResponseBody a '<type>' with value: <value>
-    AssertJsonElement ByPreviousFind in RestResponseBody is a '<type>' with value: <value>
+    AssertJsonElement ByJsonPath 'result' in RestResponseBody a '<type>' with value: <value>
+    #AssertJsonElement ByPreviousFind in RestResponseBody is a '<type>' with value: <value>

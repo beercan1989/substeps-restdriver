@@ -1,6 +1,7 @@
 Define: Given I am creating an API POST call to add two numbers
-    NewRestRequest as 'POST' to '/post-sum'
-    NewRestRequestBody using the 'SimpleJsonRequestBodyBuilder'
+    RestRequest setup new request
+    RestRequest build body using the 'SimpleJsonRequestBodyBuilder'
+    RestRequest perform 'POST' on '/post-sum'
 
 Define: Containing a valid sum result
-    AssertJsonElement ByJsonPath '$.result' in RestResponseBody a 'number' with value: 3
+    AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'number' with value: 3

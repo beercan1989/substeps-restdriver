@@ -1,2 +1,3 @@
 Define: Given I am creating an API call to delete stuff
-    NewRestRequest as 'DELETE' to '/delete-success'
+    RestRequest setup new request
+    RestRequest perform 'DELETE' on '/delete-success'

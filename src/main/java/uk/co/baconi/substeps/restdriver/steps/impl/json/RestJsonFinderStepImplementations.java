@@ -19,7 +19,6 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl.json;
 
-import com.jayway.jsonpath.JsonPath;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import org.hamcrest.Matcher;
@@ -121,13 +120,15 @@ public class RestJsonFinderStepImplementations extends AbstractRestDriverSubStep
         LOG.debug("Find by JsonPath [{}] and expected type [{}]", jsonPath, expectedType);
 
         // Find by path
-        final B searchedJson = JsonPath.parse(getRawResponseBody()).read(jsonPath);
+        final B searchedJson = getResponse().body(jsonPath, expectedType).extract().path(jsonPath);
 
         // Assert that something is there
+        // TODO - Review the need for this now.
         assertThat(searchedJson, is(expectedType));
 
         // Store as current read value
-        setCurrentJsonElement(searchedJson);
+        // TODO - Review this.
+        // setCurrentJsonElement(searchedJson);
 
         return searchedJson;
     }

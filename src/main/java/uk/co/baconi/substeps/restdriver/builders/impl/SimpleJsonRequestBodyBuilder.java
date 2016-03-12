@@ -19,25 +19,25 @@
 
 package uk.co.baconi.substeps.restdriver.builders.impl;
 
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.specification.RequestSpecification;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
-import net.minidev.json.JSONObject;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SimpleJsonRequestBodyBuilder implements RequestBodyBuilder {
 
     @Override
-    public void build(final Request request, final List<RequestBodyEntry> data) {
+    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
 
-        final JSONObject json = new JSONObject();
+        final Map<String, String> body = data.stream().collect(
+                Collectors.toMap(RequestBodyEntry::getKey, RequestBodyEntry::getValue)
+        );
 
-        data.forEach(entry -> json.put(entry.getKey(), entry.getValue()));
-
-        request.body(new StringEntity(json.toJSONString(), ContentType.APPLICATION_JSON));
+        request.contentType(ContentType.JSON).body(body);
     }
 
 }

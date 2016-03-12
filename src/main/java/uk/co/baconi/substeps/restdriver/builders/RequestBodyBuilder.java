@@ -19,12 +19,13 @@
 
 package uk.co.baconi.substeps.restdriver.builders;
 
-import org.apache.http.client.fluent.Request;
+
+import com.jayway.restassured.specification.RequestSpecification;
 
 import java.util.List;
 
 public interface RequestBodyBuilder {
 
-    void build(final Request request, final List<RequestBodyEntry> data);
+    void build(final RequestSpecification request, final List<RequestBodyEntry> data);
 
 }

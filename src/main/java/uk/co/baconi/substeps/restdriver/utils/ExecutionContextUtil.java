@@ -22,9 +22,7 @@ package uk.co.baconi.substeps.restdriver.utils;
 import com.technophobia.substeps.model.Scope;
 import com.technophobia.substeps.runner.ExecutionContext;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ExecutionContextUtil {
 
@@ -40,6 +38,20 @@ public class ExecutionContextUtil {
             result = (List<A>) object;
         } else {
             result = new ArrayList<>();
+        }
+
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A, B> Map<A, B> getMap(final Scope scope, final String key) {
+        final Object object = ExecutionContext.get(scope, key);
+
+        final Map<A, B> result;
+        if (object instanceof Map) {
+            result = (Map<A, B>) object;
+        } else {
+            result = new HashMap<>();
         }
 
         return result;
