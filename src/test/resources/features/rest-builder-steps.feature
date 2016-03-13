@@ -50,7 +50,7 @@ Scenario: A scenario to test replying params
 
 Scenario: A scenario to test response times
     RestRequest setup new request
-    RestRequest add param with name 'wait-value' and value '20'
+    RestRequest add param with name 'wait-value' and value '500'
     RestRequest add param with name 'wait-unit' and value 'MILLISECONDS'
 
     RestRequest perform 'GET' on '/timed'
@@ -61,5 +61,5 @@ Scenario: A scenario to test response times
     AssertRestResponse took >= 5 NANOSECONDS
 
     AssertRestResponse took < 1 MINUTES
-    AssertRestResponse took <= 6 SECONDS
-    AssertRestResponse took <= 30 MILLISECONDS
+    AssertRestResponse took <= 2 SECONDS
+    AssertRestResponse took <= 600 MILLISECONDS

@@ -30,6 +30,7 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 + Moved to use the [org.substeps](https://github.com/Substeps/substeps-framework) fork of Substeps 
 + Setup project to generated and provide Substep implementation documentation
 + More ways to configure urls
++ Ways of asserting response times
 
 ## Changes in 0.0.3
 + More finders
