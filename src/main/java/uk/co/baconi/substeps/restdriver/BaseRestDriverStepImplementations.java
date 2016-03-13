@@ -19,12 +19,12 @@
 
 package uk.co.baconi.substeps.restdriver;
 
+import com.technophobia.substeps.model.SubSteps.AdditionalStepImplementations;
+import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.RestAssertionStepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.RestRequestBuilderStepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonAssertionStepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplementations;
-import com.technophobia.substeps.model.SubSteps.AdditionalStepImplementations;
-import com.technophobia.substeps.model.SubSteps.StepImplementations;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 @AdditionalStepImplementations({

@@ -19,20 +19,16 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl;
 
-import com.jayway.restassured.response.ValidatableResponse;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
+import com.technophobia.substeps.model.SubSteps.Step;
+import com.technophobia.substeps.model.SubSteps.StepImplementations;
+import com.technophobia.substeps.model.SubSteps.StepParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.converters.TimeUnitConverter;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
-import com.technophobia.substeps.model.SubSteps.Step;
-import com.technophobia.substeps.model.SubSteps.StepParameter;
-import com.technophobia.substeps.model.SubSteps.StepImplementations;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 import static org.hamcrest.Matchers.*;
 
@@ -92,7 +88,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
     /**
      * Check that the rest response has the expected http header with the given value.
      *
-     * @param headerName the header name
+     * @param headerName  the header name
      * @param headerValue the header value
      * @example AssertRestResponse has header of name 'name' with value 'bob'
      * @section Rest Assertion
@@ -108,32 +104,35 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
     /**
      * Check that the rest response has the expected http header with a predetermined state.
      *
-     * @param headerName the header name
+     * @param headerName       the header name
      * @param headerValueState the predetermined state for the value
-     * @return a validatable response
      * @example AssertRestResponse has header of name 'name' with 'any' value
      * @section Rest Assertion
      */
     @Step("AssertRestResponse has header of name '([^']+)' with '(any|no|blank|non-blank)' value")
-    public ValidatableResponse assertResponseHasHeader(final String headerName, final String headerValueState) {
+    public void assertResponseHasHeader(final String headerName, final String headerValueState) {
 
         LOG.debug("Asserting that there is a response header of name [{}], with built in checking for [{}]", headerName, headerValueState);
 
         switch (headerValueState) {
             case "any": {
-                return getResponse().header(headerName, is(not(nullValue())));
+                getResponse().header(headerName, is(not(nullValue())));
+                break;
             }
             case "no": {
-                return getResponse().header(headerName, is(nullValue()));
+                getResponse().header(headerName, is(nullValue()));
+                break;
             }
             case "blank": {
-                return getResponse().header(headerName, isEmptyString());
+                getResponse().header(headerName, isEmptyString());
+                break;
             }
             case "non-blank": {
-                return getResponse().header(headerName, not(isEmptyString()));
+                getResponse().header(headerName, not(isEmptyString()));
+                break;
             }
             default: {
-                throw new AssertionError("Unsupported Type ["+headerValueState+"]");
+                throw new AssertionError("Unsupported Type [" + headerValueState + "]");
             }
         }
     }
@@ -142,42 +141,47 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * Check that the rest response responded with the expected amount of time
      *
      * @param operator the comparison type to make
-     * @param timeout the amount of time taken
-     * @param unit the unit of time taken, which maps directly to the TimeUnit enum
-     * @return a validatable response
-     * @example AssertRestResponse took &lt; 1 NANOSECONDS
-     * @example AssertRestResponse took = 2 MICROSECONDS
-     * @example AssertRestResponse took &gt; 3 MILLISECONDS
-     * @example AssertRestResponse took &lt;= 4 SECONDS
-     * @example AssertRestResponse took &gt;= 5 MINUTES
+     * @param timeout  the amount of time taken
+     * @param unit     the unit of time taken, which maps directly to the TimeUnit enum
+     * @example AssertRestResponse took lessThan 30 MILLISECONDS
      * @section Rest Assertion
      */
-    @Step("AssertRestResponse took (<|=|>|<=|>=) ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
-    public ValidatableResponse assertRestResponseTookSomeTime(
+    @Step("AssertRestResponse took (lessThan|lessThanOrEqualTo|equalTo|greaterThan|greaterThanOrEqualTo|<|=|>|<=|>=) ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
+    public void assertRestResponseTookSomeTime(
             final String operator, final Long timeout,
             @StepParameter(converter = TimeUnitConverter.class) final TimeUnit unit
-    ){
+    ) {
 
         LOG.debug("Asserting that the request took [{} {} {}] to complete.", operator, timeout, unit);
 
         switch (operator) {
+            case "lessThan":
             case "<": {
-                return getResponse().time(lessThan(timeout), unit);
+                getResponse().time(lessThan(timeout), unit);
+                break;
             }
+            case "lessThanOrEqualTo":
             case "<=": {
-                return getResponse().time(lessThanOrEqualTo(timeout), unit);
+                getResponse().time(lessThanOrEqualTo(timeout), unit);
+                break;
             }
+            case "equalTo":
             case "=": {
-                return getResponse().time(equalTo(timeout), unit);
+                getResponse().time(equalTo(timeout), unit);
+                break;
             }
+            case "greaterThan":
             case ">": {
-                return getResponse().time(greaterThan(timeout), unit);
+                getResponse().time(greaterThan(timeout), unit);
+                break;
             }
+            case "greaterThanOrEqualTo":
             case ">=": {
-                return getResponse().time(greaterThanOrEqualTo(timeout), unit);
+                getResponse().time(greaterThanOrEqualTo(timeout), unit);
+                break;
             }
             default: {
-                throw new AssertionError("Unsupported Type ["+operator+"]");
+                throw new AssertionError("Unsupported Type [" + operator + "]");
             }
         }
     }
@@ -186,25 +190,18 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * Check that the rest response responded within the given time range
      *
      * @param from the lower acceptable time
-     * @param to the upper acceptable time
+     * @param to   the upper acceptable time
      * @param unit the unit of time taken, which maps directly to the TimeUnit enum
-     * @return a validatable response
-     * @example AssertRestResponse took between 1 and 2 NANOSECONDS
-     * @example AssertRestResponse took between 1 and 3 MICROSECONDS
      * @example AssertRestResponse took between 1 and 4 MILLISECONDS
-     * @example AssertRestResponse took between 1 and 5 SECONDS
-     * @example AssertRestResponse took between 1 and 6 MINUTES
-     * @example AssertRestResponse took between 1 and 7 HOURS
-     * @example AssertRestResponse took between 1 and 8 DAYS
      * @section Rest Assertion
      */
     @Step("AssertRestResponse took between ([0-9]+) and ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
-    public ValidatableResponse assertRestResponseTookSomeTime(
+    public void assertRestResponseTookSomeTime(
             final Long from, final Long to, @StepParameter(converter = TimeUnitConverter.class) final TimeUnit unit
-    ){
+    ) {
 
         LOG.debug("Asserting that the request took between [{}] and [{}] [{}] to complete.", from, to, unit);
 
-        return getResponse().time(is(both(greaterThanOrEqualTo(from)).and(lessThanOrEqualTo(to))), unit);
+        getResponse().time(is(both(greaterThanOrEqualTo(from)).and(lessThanOrEqualTo(to))), unit);
     }
 }
