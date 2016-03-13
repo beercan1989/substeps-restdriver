@@ -18,6 +18,9 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 </dependency>
 ```
 
+## Documentation
++ Available substeps: [docs/rest-driver-substeps.md](docs/rest-driver-substeps.md)
+
 ## Features that might be included in the future
 + XML Support
 + Bug fixing

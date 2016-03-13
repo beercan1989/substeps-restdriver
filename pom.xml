@@ -65,7 +65,7 @@
     <properties>
         <!-- Core Properties -->
         <slf4j.version>1.7.12</slf4j.version>
-        <substeps.version>1.1.2</substeps.version>
+        <substeps.version>1.0.1</substeps.version>
         <typesafe.config.version>1.3.0</typesafe.config.version>
 
         <!-- Rest Specific Properties -->
@@ -117,7 +117,7 @@
 
         <!-- Substeps -->
         <dependency>
-            <groupId>com.technophobia.substeps</groupId>
+            <groupId>org.substeps</groupId>
             <artifactId>substeps-core-api</artifactId>
             <version>${substeps.version}</version>
         </dependency>
@@ -131,13 +131,13 @@
 
         <!-- Testing -->
         <dependency>
-            <groupId>com.technophobia.substeps</groupId>
+            <groupId>org.substeps</groupId>
             <artifactId>substeps-junit-runner</artifactId>
             <version>${substeps.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.technophobia.substeps</groupId>
+            <groupId>org.substeps</groupId>
             <artifactId>substeps-core</artifactId>
             <version>${substeps.version}</version>
             <scope>test</scope>
@@ -214,18 +214,39 @@
             </plugin>
 
             <plugin>
-                <groupId>com.technophobia.substeps</groupId>
+                <groupId>org.substeps</groupId>
                 <artifactId>substeps-glossary-builder</artifactId>
                 <version>${substeps.version}</version>
 
                 <executions>
                     <execution>
-                        <id>build-substeps-glossary</id>
+                        <id>build-substeps-json-glossary</id>
                         <phase>process-classes</phase>
 
                         <goals>
                             <goal>generate-docs</goal>
                         </goals>
+
+                        <configuration>
+                            <glossaryPublisher implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
+                                <outputFile>${project.build.directory}/classes/step-implementations.json</outputFile>
+                            </glossaryPublisher>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>build-substeps-markdown-glossary</id>
+                        <phase>process-classes</phase>
+
+                        <goals>
+                            <goal>generate-docs</goal>
+                        </goals>
+
+                        <configuration>
+                            <glossaryPublisher implementation="com.technophobia.substeps.glossary.MarkdownSubstepsPublisher">
+                                <outputFile>${project.basedir}/docs/rest-driver-substeps.md</outputFile>
+                            </glossaryPublisher>
+                        </configuration>
                     </execution>
                 </executions>
 
@@ -237,10 +258,6 @@
                         <param>uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonAssertionStepImplementations</param>
                         <param>uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplementations</param>
                     </stepImplementationClassNames>
-
-                    <glossaryPublisher implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
-                        <outputFile>${project.build.directory}/classes/step-implementations.json</outputFile>
-                    </glossaryPublisher>
                 </configuration>
             </plugin>
         </plugins>
