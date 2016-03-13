@@ -7,7 +7,7 @@ Rest Assertion
 | AssertRestResponse has code between '&lt;statusMin&gt;' and '&lt;statusMax&gt;' | AssertRestResponse has code between '200' and '299' | Check that the rest response has the expected http status is within the given range. |
 | AssertRestResponse has header of name '&lt;headerName&gt;' with '&lt;headerValueState&gt;' value | AssertRestResponse has header of name 'name' with 'any' value | Check that the rest response has the expected http header with a predetermined state. |
 | AssertRestResponse has header of name '&lt;headerName&gt;' with value '&lt;headerValue&gt;' | AssertRestResponse has header of name 'name' with value 'bob' | Check that the rest response has the expected http header with the given value. |
-| AssertRestResponse took &lt;operator&gt; &lt;timeout&gt; &lt;unit&gt; | AssertRestResponse took < 1 NANOSECONDS | Check that the rest response responded with the expected amount of time |
+| AssertRestResponse took &lt;operator&gt; &lt;timeout&gt; &lt;unit&gt; | AssertRestResponse took &lt; 1 NANOSECONDS | Check that the rest response responded with the expected amount of time |
 Rest Assertion - JSON
 ==========
 | **Keyword**  | **Example**  | **Description** |
