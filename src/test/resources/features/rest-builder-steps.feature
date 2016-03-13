@@ -63,3 +63,6 @@ Scenario: A scenario to test response times
     AssertRestResponse took < 1 MINUTES
     AssertRestResponse took <= 2 SECONDS
     AssertRestResponse took <= 600 MILLISECONDS
+    AssertRestResponse took < 1 MINUTES
+    AssertRestResponse took < 1 HOURS
+    AssertRestResponse took < 1 DAYS

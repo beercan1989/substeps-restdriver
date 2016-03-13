@@ -16,41 +16,41 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package uk.co.baconi.substeps.restdriver.utils;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class IOUtil {
-
-    private IOUtil() {
-    }
-
-    public static String readAll(final InputStream inputStream) throws IOException {
-        return readAllLines(inputStream).stream().collect(Collectors.joining());
-    }
-
-    public static List<String> readAllLines(final InputStream inputStream) throws IOException {
-        try (final BufferedReader reader = createBufferedReader(inputStream)) {
-            final List<String> result = new ArrayList<>();
-            for (; ; ) {
-                final String line = reader.readLine();
-                if (line == null)
-                    break;
-                result.add(line);
-            }
-            return result;
-        }
-    }
-
-    private static BufferedReader createBufferedReader(final InputStream inputStream) {
-        return new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset().newDecoder()));
-    }
-}
+//
+//package uk.co.baconi.substeps.restdriver.utils;
+//
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.io.InputStreamReader;
+//import java.nio.charset.Charset;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.stream.Collectors;
+//
+//public class IOUtil {
+//
+//    private IOUtil() {
+//    }
+//
+//    public static String readAll(final InputStream inputStream) throws IOException {
+//        return readAllLines(inputStream).stream().collect(Collectors.joining());
+//    }
+//
+//    public static List<String> readAllLines(final InputStream inputStream) throws IOException {
+//        try (final BufferedReader reader = createBufferedReader(inputStream)) {
+//            final List<String> result = new ArrayList<>();
+//            for (; ; ) {
+//                final String line = reader.readLine();
+//                if (line == null)
+//                    break;
+//                result.add(line);
+//            }
+//            return result;
+//        }
+//    }
+//
+//    private static BufferedReader createBufferedReader(final InputStream inputStream) {
+//        return new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset().newDecoder()));
+//    }
+//}

@@ -141,8 +141,8 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * Check that the rest response responded with the expected amount of time
      *
      * @param operator the comparison type to make
-     * @param timeValue the amount of time taken
-     * @param timeUnit the unit of time taken, which maps directly to the TimeUnit enum
+     * @param timeout the amount of time taken
+     * @param unit the unit of time taken, which maps directly to the TimeUnit enum
      * @example AssertRestResponse took < 1 NANOSECONDS
      * @example AssertRestResponse took = 2 MICROSECONDS
      * @example AssertRestResponse took > 3 MILLISECONDS
@@ -151,27 +151,27 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * @section Rest Assertion
      */
     @Step("AssertRestResponse took (<|=|>|<=|>=) ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
-    public ValidatableResponse assertRestResponseTookSomeTime(final String operator, final Long timeValue,
-            @StepParameter(converter = TimeUnitConverter.class) final TimeUnit timeUnit
+    public ValidatableResponse assertRestResponseTookSomeTime(final String operator, final Long timeout,
+            @StepParameter(converter = TimeUnitConverter.class) final TimeUnit unit
     ){
 
-        LOG.debug("Asserting that the request took [{} {} {}] to complete.", operator, timeValue, timeUnit);
+        LOG.debug("Asserting that the request took [{} {} {}] to complete.", operator, timeout, unit);
 
         switch (operator) {
             case "<": {
-                return getResponse().time(lessThan(timeValue), timeUnit);
+                return getResponse().time(lessThan(timeout), unit);
             }
             case "<=": {
-                return getResponse().time(lessThanOrEqualTo(timeValue), timeUnit);
+                return getResponse().time(lessThanOrEqualTo(timeout), unit);
             }
             case "=": {
-                return getResponse().time(equalTo(timeValue), timeUnit);
+                return getResponse().time(equalTo(timeout), unit);
             }
             case ">": {
-                return getResponse().time(greaterThan(timeValue), timeUnit);
+                return getResponse().time(greaterThan(timeout), unit);
             }
             case ">=": {
-                return getResponse().time(greaterThanOrEqualTo(timeValue), timeUnit);
+                return getResponse().time(greaterThanOrEqualTo(timeout), unit);
             }
             default: {
                 throw new AssertionError("Unsupported Type ["+operator+"]");
