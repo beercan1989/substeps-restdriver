@@ -25,9 +25,7 @@ import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
-import org.apache.http.StatusLine;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
