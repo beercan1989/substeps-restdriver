@@ -106,4 +106,10 @@ public class TestRestController {
     Result<String> replayCookie(@CookieValue("replay") final String cookie) {
         return new Result<>(cookie);
     }
+
+    @RequestMapping("/replay-param")
+    @ResponseStatus(HttpStatus.OK)
+    Result<String> replayParam(@RequestParam("replay") final String param) {
+        return new Result<>(param);
+    }
 }

@@ -38,3 +38,12 @@ Scenario: A scenario to test other hidden gems
     AssertRestResponse has code '200' with reason 'HTTP/1.1 200 OK'
     AssertRestResponse has header of name 'replayed' with 'no' value
     AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'string' with value: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+Scenario: A scenario to test replying params
+    RestRequest setup new request
+    RestRequest add param with name 'replay' and value '0987654321'
+
+    RestRequest perform 'GET' on '/replay-param'
+
+    AssertRestResponse has code '200'
+    AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'string' with value: 0987654321
