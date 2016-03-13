@@ -66,3 +66,4 @@ Scenario: A scenario to test response times
     AssertRestResponse took < 1 MINUTES
     AssertRestResponse took < 1 HOURS
     AssertRestResponse took < 1 DAYS
+    AssertRestResponse took between 500 and 600 MILLISECONDS

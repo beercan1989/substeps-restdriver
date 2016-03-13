@@ -153,7 +153,8 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * @section Rest Assertion
      */
     @Step("AssertRestResponse took (<|=|>|<=|>=) ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
-    public ValidatableResponse assertRestResponseTookSomeTime(final String operator, final Long timeout,
+    public ValidatableResponse assertRestResponseTookSomeTime(
+            final String operator, final Long timeout,
             @StepParameter(converter = TimeUnitConverter.class) final TimeUnit unit
     ){
 
@@ -179,5 +180,31 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
                 throw new AssertionError("Unsupported Type ["+operator+"]");
             }
         }
+    }
+
+    /**
+     * Check that the rest response responded within the given time range
+     *
+     * @param from the lower acceptable time
+     * @param to the upper acceptable time
+     * @param unit the unit of time taken, which maps directly to the TimeUnit enum
+     * @return a validatable response
+     * @example AssertRestResponse took between 1 and 2 NANOSECONDS
+     * @example AssertRestResponse took between 1 and 3 MICROSECONDS
+     * @example AssertRestResponse took between 1 and 4 MILLISECONDS
+     * @example AssertRestResponse took between 1 and 5 SECONDS
+     * @example AssertRestResponse took between 1 and 6 MINUTES
+     * @example AssertRestResponse took between 1 and 7 HOURS
+     * @example AssertRestResponse took between 1 and 8 DAYS
+     * @section Rest Assertion
+     */
+    @Step("AssertRestResponse took between ([0-9]+) and ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
+    public ValidatableResponse assertRestResponseTookSomeTime(
+            final Long from, final Long to, @StepParameter(converter = TimeUnitConverter.class) final TimeUnit unit
+    ){
+
+        LOG.debug("Asserting that the request took between [{}] and [{}] [{}] to complete.", from, to, unit);
+
+        return getResponse().time(is(both(greaterThanOrEqualTo(from)).and(lessThanOrEqualTo(to))), unit);
     }
 }
