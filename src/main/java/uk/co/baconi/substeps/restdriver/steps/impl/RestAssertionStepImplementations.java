@@ -19,12 +19,20 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl;
 
+import com.jayway.restassured.response.ValidatableResponse;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
+import uk.co.baconi.substeps.restdriver.converters.TimeUnitConverter;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 import com.technophobia.substeps.model.SubSteps.Step;
+import com.technophobia.substeps.model.SubSteps.StepParameter;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
+
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import static org.hamcrest.Matchers.*;
 
@@ -106,29 +114,67 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * @section Rest Assertion
      */
     @Step("AssertRestResponse has header of name '([^']+)' with '(any|no|blank|non-blank)' value")
-    public void assertResponseHasHeader(final String headerName, final String headerValueState) {
+    public ValidatableResponse assertResponseHasHeader(final String headerName, final String headerValueState) {
 
         LOG.debug("Asserting that there is a response header of name [{}], with built in checking for [{}]", headerName, headerValueState);
 
         switch (headerValueState) {
             case "any": {
-                getResponse().header(headerName, is(not(nullValue())));
-                break;
+                return getResponse().header(headerName, is(not(nullValue())));
             }
             case "no": {
-                getResponse().header(headerName, is(nullValue()));
-                break;
+                return getResponse().header(headerName, is(nullValue()));
             }
             case "blank": {
-                getResponse().header(headerName, isEmptyString());
-                break;
+                return getResponse().header(headerName, isEmptyString());
             }
             case "non-blank": {
-                getResponse().header(headerName, not(isEmptyString()));
-                break;
+                return getResponse().header(headerName, not(isEmptyString()));
             }
             default: {
                 throw new AssertionError("Unsupported Type ["+headerValueState+"]");
+            }
+        }
+    }
+
+    /**
+     * Check that the rest response responded with the expected amount of time
+     *
+     * @param operator the comparison type to make
+     * @param timeValue the amount of time taken
+     * @param timeUnit the unit of time taken, which maps directly to the TimeUnit enum
+     * @example AssertRestResponse took < 1 NANOSECONDS
+     * @example AssertRestResponse took = 2 MICROSECONDS
+     * @example AssertRestResponse took > 3 MILLISECONDS
+     * @example AssertRestResponse took <= 4 SECONDS
+     * @example AssertRestResponse took >= 5 MINUTES
+     * @section Rest Assertion
+     */
+    @Step("AssertRestResponse took (<|=|>|<=|>=) ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")
+    public ValidatableResponse assertRestResponseTookSomeTime(final String operator, final Long timeValue,
+            @StepParameter(converter = TimeUnitConverter.class) final TimeUnit timeUnit
+    ){
+
+        LOG.debug("Asserting that the request took [{} {} {}] to complete.", operator, timeValue, timeUnit);
+
+        switch (operator) {
+            case "<": {
+                return getResponse().time(lessThan(timeValue), timeUnit);
+            }
+            case "<=": {
+                return getResponse().time(lessThanOrEqualTo(timeValue), timeUnit);
+            }
+            case "=": {
+                return getResponse().time(equalTo(timeValue), timeUnit);
+            }
+            case ">": {
+                return getResponse().time(greaterThan(timeValue), timeUnit);
+            }
+            case ">=": {
+                return getResponse().time(greaterThanOrEqualTo(timeValue), timeUnit);
+            }
+            default: {
+                throw new AssertionError("Unsupported Type ["+operator+"]");
             }
         }
     }

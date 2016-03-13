@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class TestRestController {
@@ -111,5 +112,11 @@ public class TestRestController {
     @ResponseStatus(HttpStatus.OK)
     Result<String> replayParam(@RequestParam("replay") final String param) {
         return new Result<>(param);
+    }
+
+    @RequestMapping("/timed")
+    @ResponseStatus(HttpStatus.OK)
+    void replayParam(@RequestParam("wait-value") final Long value, @RequestParam("wait-unit") final TimeUnit unit) throws InterruptedException {
+        unit.sleep(value);
     }
 }
