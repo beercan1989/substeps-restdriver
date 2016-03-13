@@ -110,6 +110,7 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      *
      * @param headerName the header name
      * @param headerValueState the predetermined state for the value
+     * @return a validatable response
      * @example AssertRestResponse has header of name 'name' with 'any' value
      * @section Rest Assertion
      */
@@ -143,11 +144,12 @@ public class RestAssertionStepImplementations extends AbstractRestDriverSubStepI
      * @param operator the comparison type to make
      * @param timeout the amount of time taken
      * @param unit the unit of time taken, which maps directly to the TimeUnit enum
-     * @example AssertRestResponse took < 1 NANOSECONDS
+     * @return a validatable response
+     * @example AssertRestResponse took &lt; 1 NANOSECONDS
      * @example AssertRestResponse took = 2 MICROSECONDS
-     * @example AssertRestResponse took > 3 MILLISECONDS
-     * @example AssertRestResponse took <= 4 SECONDS
-     * @example AssertRestResponse took >= 5 MINUTES
+     * @example AssertRestResponse took &gt; 3 MILLISECONDS
+     * @example AssertRestResponse took &lt;= 4 SECONDS
+     * @example AssertRestResponse took &gt;= 5 MINUTES
      * @section Rest Assertion
      */
     @Step("AssertRestResponse took (<|=|>|<=|>=) ([0-9]+) (NANOSECONDS|MICROSECONDS|MILLISECONDS|SECONDS|MINUTES|HOURS|DAYS)")

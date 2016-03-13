@@ -64,6 +64,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      *
      * @param method the HTTP method type to create the request as.
      * @param url    the URL where the request will be sent to.
+     * @throws IOException if the response cannot be saved.
      * @example NewRestRequest as 'GET' to '/get-stuff'
      * @example NewRestRequest as 'GET' to 'http://localhost:9000/get-stuff'
      * @section Rest Builder
