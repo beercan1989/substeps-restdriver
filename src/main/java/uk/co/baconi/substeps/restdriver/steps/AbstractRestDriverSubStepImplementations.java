@@ -20,6 +20,7 @@
 package uk.co.baconi.substeps.restdriver.steps;
 
 import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.config.HttpClientConfig;
 import com.jayway.restassured.response.ValidatableResponse;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.technophobia.substeps.model.Scope;

@@ -2,12 +2,12 @@
 
 Project to provide a new type of Driver for use with Substeps, that will enable the ability to testing of rest endpoints by creating requests and asserting the responses.
 
-+ Substeps Site: https://substeps.g2g3.digital
-+ Substeps Sources: https://github.com/G2G3Digital?utf8=%E2%9C%93&query=substeps
++ Substeps Site: http://substeps.github.io
++ Substeps Sources: https://github.com/Substeps
 
 ## Basic Requirements
 + Java 8
-+ Substeps 1.1.2
++ Substeps 1.0.1
 
 ## Latest version available in Maven Central
 ```xml
@@ -18,20 +18,29 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 </dependency>
 ```
 
+## Documentation
++ Available substeps: [docs/rest-driver-substeps.md](docs/rest-driver-substeps.md)
+
 ## Features that might be included in the future
 + XML Support
 + Bug fixing
 + Other enhancements
 
-## Features in 0.0.3
+## Changes in 0.0.4
++ Moved to use the [org.substeps](https://github.com/Substeps/substeps-framework) fork of Substeps 
++ Setup project to generated and provide Substep implementation documentation
++ More ways to configure urls
++ Ways of asserting response times
+
+## Changes in 0.0.3
 + More finders
 + More assertions
 + Move to using rest assured for the requesting and asserting
 
-## Features in 0.0.2
+## Changes in 0.0.2
 + Corrections to the glossary metadata, without the fix we cannot build a glossary of the steps in projects that use this library.
 
-## Features in 0.0.1
+## Changes in 0.0.1
 + Build rest requests.
 + Add headers in key value pairs.
 + Add cookies in key value pairs.

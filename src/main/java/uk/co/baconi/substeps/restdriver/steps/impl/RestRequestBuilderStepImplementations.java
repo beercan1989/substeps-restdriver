@@ -307,4 +307,24 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
 //        // TODO - Work out how
 //        getRequest().socketTimeout(timeout);
 //    }
+
+    //
+    // Params
+    //
+
+    /**
+     * Add a parameter to the url for the current rest request being built with the given name and value
+     *
+     * @param name  the name of the url parameter to add
+     * @param value the value to set in the url parameter
+     * @example RestRequest add param with name 'name' and value 'bob'
+     * @section Rest Builder
+     */
+    @Step("RestRequest add param with name '([^']+)' and value '([^']+)'")
+    public void restRequestAddParamWithNameAndValue(final String name, final String value) {
+
+        LOG.debug("Adding to Request param [{}] with value [{}].", name, value);
+
+        getRequest().param(name, value);
+    }
 }
