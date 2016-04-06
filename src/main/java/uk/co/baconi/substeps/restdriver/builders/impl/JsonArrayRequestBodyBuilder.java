@@ -19,22 +19,40 @@
 
 package uk.co.baconi.substeps.restdriver.builders.impl;
 
+
+import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
+import uk.co.baconi.substeps.restdriver.builders.GroupedKeyPairRequestBodyEntry;
+import uk.co.baconi.substeps.restdriver.builders.KeyPairRequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
 
 import java.util.List;
+import java.util.Map;
 
-public class KeyPairRequestBodyBuilder implements RequestBodyBuilder {
+import static java.util.stream.Collectors.*;
 
+public class JsonArrayRequestBodyBuilder extends RequestBodyBuilder {
+
+    @Override
     public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
 
-        data.forEach(entry ->
-                request.formParam(
-                        entry.getKey(),
-                        entry.getValue()
-                )
+        final Map<Integer, List<GroupedKeyPairRequestBodyEntry>> groupedData = verifyDataIs(
+                data, GroupedKeyPairRequestBodyEntry.class
+        ).collect(
+                groupingBy(GroupedKeyPairRequestBodyEntry::getGroup)
         );
+
+        final List<Map<String, String>> jsonBody = groupedData.values().stream().map(entry -> entry
+                .stream()
+                .collect(
+                        toMap(KeyPairRequestBodyEntry::getKey, KeyPairRequestBodyEntry::getValue)
+                )
+        ).collect(
+                toList()
+        );
+
+        request.contentType(ContentType.JSON).body(jsonBody);
     }
 
 }

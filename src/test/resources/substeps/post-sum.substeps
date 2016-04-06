@@ -1,6 +1,6 @@
 Define: Given I am creating an API POST call to add two numbers
     RestRequest setup new request
-    RestRequest build body using the 'SimpleJsonRequestBodyBuilder'
+    RestRequest build body using the 'JsonObjectRequestBodyBuilder'
     RestRequest perform 'POST' on '/post-sum'
 
 Define: Containing a valid sum result

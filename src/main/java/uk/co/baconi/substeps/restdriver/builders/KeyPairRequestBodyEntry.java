@@ -19,27 +19,21 @@
 
 package uk.co.baconi.substeps.restdriver.builders;
 
+public class KeyPairRequestBodyEntry implements RequestBodyEntry {
 
-import com.jayway.restassured.specification.RequestSpecification;
+    private final String key;
+    private final String value;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-
-public abstract class RequestBodyBuilder {
-
-    public abstract void build(final RequestSpecification request, final List<RequestBodyEntry> data);
-
-    protected <A extends RequestBodyEntry> Stream<A> verifyDataIs(final List<RequestBodyEntry> data, Class<A> clazz) {
-
-        return data.stream().map(entry -> {
-            assertThat(entry, is(instanceOf(clazz)));
-            return clazz.cast(entry);
-        });
+    public KeyPairRequestBodyEntry(final String key, final String value) {
+        this.key = key;
+        this.value = value;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

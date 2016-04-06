@@ -23,6 +23,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.ValidatableResponse;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.technophobia.substeps.model.Scope;
+import uk.co.baconi.substeps.restdriver.builders.KeyPairRequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.properties.RestDriverSubstepsConfiguration;
@@ -82,7 +83,7 @@ public abstract class AbstractRestDriverSubStepImplementations {
     // Request Body
     //
     protected void addToRequestBodyData(final String key, final String value) {
-        addToRequestBodyData(new RequestBodyEntry(key, value));
+        addToRequestBodyData(new KeyPairRequestBodyEntry(key, value));
     }
 
     protected void addToRequestBodyData(final RequestBodyEntry entry) {
