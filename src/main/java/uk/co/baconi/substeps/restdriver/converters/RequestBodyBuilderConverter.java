@@ -23,6 +23,7 @@ import com.technophobia.substeps.model.parameter.Converter;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.impl.FormRequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.impl.JsonArrayRequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.impl.JsonFromUriRequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.impl.JsonObjectRequestBodyBuilder;
 
 public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder> {
@@ -47,6 +48,10 @@ public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder
                 }
                 case "JsonArrayRequestBodyBuilder": {
                     builder = new JsonArrayRequestBodyBuilder();
+                    break;
+                }
+                case "JsonFromUriRequestBodyBuilder": {
+                    builder = new JsonFromUriRequestBodyBuilder();
                     break;
                 }
                 case "FormRequestBodyBuilder": {
