@@ -17,29 +17,28 @@
  * under the License.
  */
 
-package uk.co.baconi.substeps.restdriver.builders;
+package uk.co.baconi.substeps.restdriver.builders.impl;
 
-
+import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
+import uk.co.baconi.substeps.restdriver.builders.KeyPairRequestBodyEntry;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
+public class JsonObjectRequestBodyBuilder extends RequestBodyBuilder {
 
-public abstract class RequestBodyBuilder {
+    @Override
+    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
 
-    public abstract void build(final RequestSpecification request, final List<RequestBodyEntry> data);
+        final Map<String, String> body = verifyDataIs(data, KeyPairRequestBodyEntry.class).collect(
+                Collectors.toMap(KeyPairRequestBodyEntry::getKey, KeyPairRequestBodyEntry::getValue)
+        );
 
-    protected <A extends RequestBodyEntry> Stream<A> verifyDataIs(final List<RequestBodyEntry> data, Class<A> clazz) {
-
-        return data.stream().map(entry -> {
-            assertThat(entry, is(instanceOf(clazz)));
-            return clazz.cast(entry);
-        });
+        request.contentType(ContentType.JSON).body(body);
     }
 
 }

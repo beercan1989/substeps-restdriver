@@ -17,29 +17,25 @@
  * under the License.
  */
 
-package uk.co.baconi.substeps.restdriver.builders;
-
+package uk.co.baconi.substeps.restdriver.builders.impl;
 
 import com.jayway.restassured.specification.RequestSpecification;
+import uk.co.baconi.substeps.restdriver.builders.KeyPairRequestBodyEntry;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
+public class FormRequestBodyBuilder extends RequestBodyBuilder {
 
-public abstract class RequestBodyBuilder {
+    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
 
-    public abstract void build(final RequestSpecification request, final List<RequestBodyEntry> data);
-
-    protected <A extends RequestBodyEntry> Stream<A> verifyDataIs(final List<RequestBodyEntry> data, Class<A> clazz) {
-
-        return data.stream().map(entry -> {
-            assertThat(entry, is(instanceOf(clazz)));
-            return clazz.cast(entry);
-        });
+        verifyDataIs(data, KeyPairRequestBodyEntry.class).forEach(entry ->
+                request.formParam(
+                        entry.getKey(),
+                        entry.getValue()
+                )
+        );
     }
 
 }

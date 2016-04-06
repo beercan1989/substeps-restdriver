@@ -17,27 +17,18 @@
  * under the License.
  */
 
-package uk.co.baconi.substeps.restdriver.builders.impl;
+package uk.co.baconi.substeps.restdriver.builders;
 
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.specification.RequestSpecification;
-import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
-import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
+public class GroupedKeyPairRequestBodyEntry extends KeyPairRequestBodyEntry {
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+    private final int group;
 
-public class SimpleJsonRequestBodyBuilder implements RequestBodyBuilder {
-
-    @Override
-    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
-
-        final Map<String, String> body = data.stream().collect(
-                Collectors.toMap(RequestBodyEntry::getKey, RequestBodyEntry::getValue)
-        );
-
-        request.contentType(ContentType.JSON).body(body);
+    public GroupedKeyPairRequestBodyEntry(final int group, final String key, final String value) {
+        super(key, value);
+        this.group = group;
     }
 
+    public int getGroup() {
+        return group;
+    }
 }

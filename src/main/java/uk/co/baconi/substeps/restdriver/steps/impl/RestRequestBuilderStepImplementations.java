@@ -29,6 +29,7 @@ import org.apache.http.client.methods.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
+import uk.co.baconi.substeps.restdriver.builders.GroupedKeyPairRequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.converters.RequestBodyBuilderConverter;
@@ -227,14 +228,31 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     }
 
     /**
-     * Select the type of rest request body builder to be used in the current scenario. Currently there is only support
-     * for SimpleJsonRequestBodyBuilder (key pairs in json format) and KeyPairRequestBodyBuilder (form submission format).
+     * Add data to the current request being build, at a position with name and value provided.
      *
-     * @param builder the type of rest request body builder
-     * @example NewRestRequestBody using the 'SimpleJsonRequestBodyBuilder'
+     * @param position the position in the json array to place the key pair
+     * @param name the key of the paired data
+     * @param value the value of the paired data
+     * @example RestRequest add data at position '0' with name 'username' and value 'bob'
      * @section Rest Builder
      */
-    @Step("RestRequest build body using the '(SimpleJsonRequestBodyBuilder|KeyPairRequestBodyBuilder)'")
+    @Step("RestRequest add data at position '([0-9]+)' with name '([^']+)' and value '([^']+)'")
+    public void restRequestAddDataAtPositionWithNameAndValue(final int position, final String name, final String value) {
+
+        LOG.debug("Adding Data for Rest Request at position [{}] with name [{}] and value [{}]", position, name, value);
+
+        addToRequestBodyData(new GroupedKeyPairRequestBodyEntry(position, name, value));
+    }
+
+    /**
+     * Select the type of rest request body builder to be used in the current scenario. Currently there is only support
+     * for JsonObjectRequestBodyBuilder (key pairs in json format) and FormRequestBodyBuilder (form submission format).
+     *
+     * @param builder the type of rest request body builder
+     * @example NewRestRequestBody using the 'JsonObjectRequestBodyBuilder'
+     * @section Rest Builder
+     */
+    @Step("RestRequest build body using the '(JsonArrayRequestBodyBuilder|JsonObjectRequestBodyBuilder|FormRequestBodyBuilder)'")
     public void restRequestBuildBodyUsingThe(@StepParameter(converter = RequestBodyBuilderConverter.class) final RequestBodyBuilder builder) {
 
         LOG.debug("Setting RequestBodyBuilder to [{}]", builder.getClass().getName());

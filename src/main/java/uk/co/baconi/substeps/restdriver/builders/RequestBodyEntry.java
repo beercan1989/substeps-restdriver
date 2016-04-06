@@ -19,21 +19,8 @@
 
 package uk.co.baconi.substeps.restdriver.builders;
 
-public class RequestBodyEntry {
+public interface RequestBodyEntry {
 
-    private final String key;
-    private final String value;
+    // TODO - Decide if an empty interface is the right way to do this!
 
-    public RequestBodyEntry(final String key, final String value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public String getValue() {
-        return value;
-    }
 }

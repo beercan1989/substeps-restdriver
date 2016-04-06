@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -118,5 +119,11 @@ public class TestRestController {
     @ResponseStatus(HttpStatus.OK)
     void replayParam(@RequestParam("wait-value") final Long value, @RequestParam("wait-unit") final TimeUnit unit) throws InterruptedException {
         unit.sleep(value);
+    }
+
+    @RequestMapping("/replay-json-array")
+    @ResponseStatus(HttpStatus.OK)
+    List<Map<String, String>> replayJsonArray(@RequestBody List<Map<String, String>> body) {
+        return body;
     }
 }

@@ -67,3 +67,23 @@ Scenario: A scenario to test response times
     AssertRestResponse took < 1 HOURS
     AssertRestResponse took < 1 DAYS
     AssertRestResponse took between 500 and 600 MILLISECONDS
+
+Scenario: A scenario to post a list of json objects
+    RestRequest setup new request
+    RestRequest build body using the 'JsonArrayRequestBodyBuilder'
+
+    RestRequest add data at position '0' with name 'key1' and value 'value1'
+    RestRequest add data at position '0' with name 'key2' and value 'value2'
+    RestRequest add data at position '1' with name 'key1' and value 'value3'
+    RestRequest add data at position '1' with name 'key2' and value 'value4'
+
+    RestRequest perform 'POST' on '/replay-json-array'
+
+    AssertRestResponse has code '200'
+    AssertRestResponseBody is JSON 'array'
+    AssertJsonElement ByJsonPath '[0]' in RestResponseBody an 'object'
+    AssertJsonElement ByJsonPath '[1]' in RestResponseBody an 'object'
+    AssertJsonElement ByJsonPath '[0].key1' in RestResponseBody a 'string' with value: value1
+    AssertJsonElement ByJsonPath '[0].key2' in RestResponseBody a 'string' with value: value2
+    AssertJsonElement ByJsonPath '[1].key1' in RestResponseBody a 'string' with value: value3
+    AssertJsonElement ByJsonPath '[1].key2' in RestResponseBody a 'string' with value: value4

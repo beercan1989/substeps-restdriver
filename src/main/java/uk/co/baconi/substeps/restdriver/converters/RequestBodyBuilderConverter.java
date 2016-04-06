@@ -21,8 +21,9 @@ package uk.co.baconi.substeps.restdriver.converters;
 
 import com.technophobia.substeps.model.parameter.Converter;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
-import uk.co.baconi.substeps.restdriver.builders.impl.KeyPairRequestBodyBuilder;
-import uk.co.baconi.substeps.restdriver.builders.impl.SimpleJsonRequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.impl.FormRequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.impl.JsonArrayRequestBodyBuilder;
+import uk.co.baconi.substeps.restdriver.builders.impl.JsonObjectRequestBodyBuilder;
 
 public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder> {
 
@@ -37,19 +38,23 @@ public class RequestBodyBuilderConverter implements Converter<RequestBodyBuilder
         final RequestBodyBuilder builder;
 
         if (value == null) {
-            builder = new KeyPairRequestBodyBuilder();
+            builder = new FormRequestBodyBuilder();
         } else {
             switch (value) {
-                case "SimpleJsonRequestBodyBuilder": {
-                    builder = new SimpleJsonRequestBodyBuilder();
+                case "JsonObjectRequestBodyBuilder": {
+                    builder = new JsonObjectRequestBodyBuilder();
                     break;
                 }
-                case "KeyPairRequestBodyBuilder": {
-                    builder = new KeyPairRequestBodyBuilder();
+                case "JsonArrayRequestBodyBuilder": {
+                    builder = new JsonArrayRequestBodyBuilder();
+                    break;
+                }
+                case "FormRequestBodyBuilder": {
+                    builder = new FormRequestBodyBuilder();
                     break;
                 }
                 default: {
-                    builder = new KeyPairRequestBodyBuilder();
+                    builder = new FormRequestBodyBuilder();
                     break;
                 }
             }
