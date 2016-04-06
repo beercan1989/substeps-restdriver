@@ -14,7 +14,7 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 <dependency>
     <groupId>uk.co.baconi.substeps</groupId>
     <artifactId>restdriver-substeps</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 </dependency>
 ```
 
@@ -25,6 +25,10 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 + XML Support
 + Bug fixing
 + Other enhancements
+
+## Changes in 0.0.5
++ Ability to send a list of json objects in the body
++ Ability to send json loaded from a file or url in the body
 
 ## Changes in 0.0.4
 + Moved to use the [org.substeps](https://github.com/Substeps/substeps-framework) fork of Substeps 
