@@ -22,6 +22,7 @@ package uk.co.baconi.substeps.restdriver.builders;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,7 +33,7 @@ import static org.hamcrest.Matchers.is;
 
 public abstract class RequestBodyBuilder {
 
-    public abstract void build(final RequestSpecification request, final List<RequestBodyEntry> data);
+    public abstract void build(final RequestSpecification request, final List<RequestBodyEntry> data) throws IOException;
 
     protected <A extends RequestBodyEntry> Stream<A> verifyDataIs(final List<RequestBodyEntry> data, Class<A> clazz) {
 
