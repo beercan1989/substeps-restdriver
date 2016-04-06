@@ -34,7 +34,7 @@ import java.util.List;
 public class JsonFromUriRequestBodyBuilder extends RequestBodyBuilder {
 
     @Override
-    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) {
+    public void build(final RequestSpecification request, final List<RequestBodyEntry> data) throws IOException {
 
         final FromUrlRequestBodyEntry fromUrl = verifyDataIs(data, FromUrlRequestBodyEntry.class)
                 .findFirst()
@@ -42,15 +42,9 @@ public class JsonFromUriRequestBodyBuilder extends RequestBodyBuilder {
                         () -> new AssertionError("Missing RequestBodyEntry of type FromUrlRequestBodyEntry.")
                 );
 
-        try {
+        final String body = Resources.toString(fromUrl.getUrl(), Charset.forName("UTF-8"));
 
-            final String body = Resources.toString(fromUrl.getUrl(), Charset.forName("UTF-8"));
-
-            request.contentType(ContentType.JSON).body(body);
-        } catch (final IOException exception) {
-
-            throw new AssertionError("Unable to read source [" + fromUrl.getUrl().toString() + "]", exception);
-        }
+        request.contentType(ContentType.JSON).body(body);
     }
 
 }

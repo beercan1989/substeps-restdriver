@@ -100,7 +100,7 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
      * @example AssertJsonElement ByJsonPath '$.someNumber' in RestResponseBody a 'number' with value: 666
      * @section Rest Assertion - JSON
      */
-    @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'number' with value: ([0-9]+(?:\\.[0-9]+)?)")
+    @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'number' with value: ([\\.0-9]+)")
     public void assertJsonElementByJsonPathInRestResponseBodyANumberWithValue(final String jsonPath, final double expectedValue) throws IOException {
         LOG.debug("Asserting that by JsonPath [{}] there is a string with value: {}", jsonPath, expectedValue);
 
