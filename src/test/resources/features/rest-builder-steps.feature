@@ -87,18 +87,3 @@ Scenario: A scenario to post a list of json objects
     AssertJsonElement ByJsonPath '[0].key2' in RestResponseBody a 'string' with value: value2
     AssertJsonElement ByJsonPath '[1].key1' in RestResponseBody a 'string' with value: value3
     AssertJsonElement ByJsonPath '[1].key2' in RestResponseBody a 'string' with value: value4
-
-Scenario: A scenario to post a json file
-    RestRequest setup new request
-    RestRequest build body using the 'JsonFromUriRequestBodyBuilder'
-    RestRequest add data from resource file 'json/some.json'
-    RestRequest perform 'POST' on '/replay-json-array'
-
-    AssertRestResponse has code '200'
-    AssertRestResponseBody is JSON 'array'
-    AssertJsonElement ByJsonPath '[0]' in RestResponseBody an 'object'
-    AssertJsonElement ByJsonPath '[1]' in RestResponseBody an 'object'
-    AssertJsonElement ByJsonPath '[0].key1' in RestResponseBody a 'string' with value: value1
-    AssertJsonElement ByJsonPath '[0].key2' in RestResponseBody a 'string' with value: value2
-    AssertJsonElement ByJsonPath '[1].key1' in RestResponseBody a 'string' with value: value3
-    AssertJsonElement ByJsonPath '[1].key2' in RestResponseBody a 'string' with value: value4

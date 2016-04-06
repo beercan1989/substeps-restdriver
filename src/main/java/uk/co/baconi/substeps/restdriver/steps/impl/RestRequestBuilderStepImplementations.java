@@ -29,7 +29,6 @@ import org.apache.http.client.methods.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
-import uk.co.baconi.substeps.restdriver.builders.FromUrlRequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.builders.GroupedKeyPairRequestBodyEntry;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyBuilder;
 import uk.co.baconi.substeps.restdriver.builders.RequestBodyEntry;
@@ -39,9 +38,6 @@ import uk.co.baconi.substeps.restdriver.properties.RestDriverSubstepsConfigurati
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
@@ -248,22 +244,6 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
         addToRequestBodyData(new GroupedKeyPairRequestBodyEntry(position, name, value));
     }
 
-    @Step("RestRequest add data from resource file '([^']+)'")
-    public void restRequestAddDataFromResourceFile(final String resourceFile) throws URISyntaxException {
-
-        LOG.debug("Adding Data for Rest Request from file [{}]", resourceFile);
-
-        addToRequestBodyData(new FromUrlRequestBodyEntry(Thread.currentThread().getContextClassLoader().getResource(resourceFile)));
-    }
-
-    @Step("RestRequest add data from url '([^']+)'")
-    public void restRequestAddDataFromUrl(final String url) throws MalformedURLException {
-
-        LOG.debug("Adding Data for Rest Request from url [{}]", url);
-
-        addToRequestBodyData(new FromUrlRequestBodyEntry(new URL(url)));
-    }
-
     /**
      * Select the type of rest request body builder to be used in the current scenario. Currently there is only support
      * for JsonObjectRequestBodyBuilder (key pairs in json format) and FormRequestBodyBuilder (form submission format).
@@ -272,7 +252,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @example NewRestRequestBody using the 'JsonObjectRequestBodyBuilder'
      * @section Rest Builder
      */
-    @Step("RestRequest build body using the '(JsonArrayRequestBodyBuilder|JsonObjectRequestBodyBuilder|JsonFromUriRequestBodyBuilder|FormRequestBodyBuilder)'")
+    @Step("RestRequest build body using the '(JsonArrayRequestBodyBuilder|JsonObjectRequestBodyBuilder|FormRequestBodyBuilder)'")
     public void restRequestBuildBodyUsingThe(@StepParameter(converter = RequestBodyBuilderConverter.class) final RequestBodyBuilder builder) {
 
         LOG.debug("Setting RequestBodyBuilder to [{}]", builder.getClass().getName());
