@@ -1,3 +1,9 @@
+Miscellaneous
+==========
+| **Keyword**  | **Example**  | **Description** |
+| :------------ |:---------------| :-----|
+| RestRequest add data from resource file '&lt;resourceFile&gt;' |  |  |
+| RestRequest add data from url '&lt;url&gt;' |  |  |
 Rest Assertion
 ==========
 | **Keyword**  | **Example**  | **Description** |
