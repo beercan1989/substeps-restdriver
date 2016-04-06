@@ -53,7 +53,7 @@ Scenario: A scenario to test response times
     RestRequest add param with name 'wait-value' and value '500'
     RestRequest add param with name 'wait-unit' and value 'MILLISECONDS'
 
-    RestRequest perform 'GET' on '/timed'
+    RestRequest perform 'GET' on '/timed/'
 
     AssertRestResponse has code '200'
 
@@ -92,6 +92,21 @@ Scenario: A scenario to post a json file
     RestRequest setup new request
     RestRequest build body using the 'JsonFromUriRequestBodyBuilder'
     RestRequest add data from resource file 'json/some.json'
+    RestRequest perform 'POST' on '/replay-json-array'
+
+    AssertRestResponse has code '200'
+    AssertRestResponseBody is JSON 'array'
+    AssertJsonElement ByJsonPath '[0]' in RestResponseBody an 'object'
+    AssertJsonElement ByJsonPath '[1]' in RestResponseBody an 'object'
+    AssertJsonElement ByJsonPath '[0].key1' in RestResponseBody a 'string' with value: value1
+    AssertJsonElement ByJsonPath '[0].key2' in RestResponseBody a 'string' with value: value2
+    AssertJsonElement ByJsonPath '[1].key1' in RestResponseBody a 'string' with value: value3
+    AssertJsonElement ByJsonPath '[1].key2' in RestResponseBody a 'string' with value: value4
+
+Scenario: A scenario to post a json url
+    RestRequest setup new request
+    RestRequest build body using the 'JsonFromUriRequestBodyBuilder'
+    RestRequest add data from url 'https://raw.githubusercontent.com/beercan1989/substeps-restdriver/master/src/test/resources/json/some.json'
     RestRequest perform 'POST' on '/replay-json-array'
 
     AssertRestResponse has code '200'
