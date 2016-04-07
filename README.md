@@ -26,6 +26,11 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 + Bug fixing
 + Other enhancements
 
+## Changes coming in 0.0.6
++ Ability to extract data
++ Ability to set named path parameters, both manual and extracted data
++ Ability to assert based on extracted data
+
 ## Changes in 0.0.5
 + Ability to send a list of json objects in the body
 + Ability to send json loaded from a file or url in the body
