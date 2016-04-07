@@ -115,6 +115,12 @@ public class TestRestController {
         return new Result<>(param);
     }
 
+    @RequestMapping("/replay-path-param/{param}")
+    @ResponseStatus(HttpStatus.OK)
+    Result<String> replayPathParam(@PathVariable final String param) {
+        return new Result<>(param);
+    }
+
     @RequestMapping("/timed")
     @ResponseStatus(HttpStatus.OK)
     void replayParam(@RequestParam("wait-value") final Long value, @RequestParam("wait-unit") final TimeUnit unit) throws InterruptedException {
