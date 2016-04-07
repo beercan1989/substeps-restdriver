@@ -19,14 +19,17 @@
 
 package uk.co.baconi.substeps.restdriver.steps.impl.json;
 
+import com.technophobia.substeps.model.Scope;
 import com.technophobia.substeps.model.SubSteps.Step;
 import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.baconi.substeps.restdriver.RestDriverSetupAndTearDown;
 import uk.co.baconi.substeps.restdriver.steps.AbstractRestDriverSubStepImplementations;
+import uk.co.baconi.substeps.restdriver.utils.ExecutionContextUtil;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -107,6 +110,27 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
         final String result = finderImpl.findJsonElementByJsonPathInRestResponseBodyAString(jsonPath);
 
         assertThat(result, containsString(expectedValue));
+    }
+
+    /**
+     * Assert that at the given JsonPath there is a string that contains the value stored in the scenario variable.
+     * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
+     *
+     * @param jsonPath      the JsonPath to search with
+     * @param variableName the scenario variable name
+     * @throws IOException if the response body could not be read
+     * @example AssertJsonElement ByJsonPath 'someString' in RestResponseBody a 'string' with value in scenario variable: TEST
+     * @section Rest Assertion - JSON
+     */
+    @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'string' with value in scenario variable: (.*)")
+    public void assertJsonElementByJsonPathInRestResponseBodyAStringWithValueInScenarioVariable(final String jsonPath, final String variableName) throws IOException {
+        LOG.debug("Asserting that by JsonPath [{}] there is a string matching the value in scenario variable: {}", jsonPath, variableName);
+
+        final String result = finderImpl.findJsonElementByJsonPathInRestResponseBodyAString(jsonPath);
+
+        final String expectedValue = getCustomVariable(variableName, String.class);
+
+        assertThat(result, is(equalTo(expectedValue)));
     }
 
     /**

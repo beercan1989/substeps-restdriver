@@ -46,11 +46,11 @@ public class RestJsonExtractorStepImplementations extends AbstractRestDriverSubS
      * @param jsonPath the JsonPath to search with
      * @return the extracted json data
      * @throws IOException if the response body could not be read
-     * @example ExtractJsonElement ByJsonPath 'id' as a 'string' into context variable 'SOME_ID'
+     * @example ExtractJsonElement ByJsonPath 'id' as a 'string' into scenario variable 'SOME_ID'
      * @section Rest Extractor - JSON
      */
-    @Step("ExtractJsonElement ByJsonPath '([^']+)' as a 'string' into context variable '([^']+)'")
-    public String extractJsonElementByJsonPathAsAStringIntoContexctVariable(final String jsonPath, final String variableName) throws IOException {
+    @Step("ExtractJsonElement ByJsonPath '([^']+)' as a 'string' into scenario variable '([^']+)'")
+    public String extractJsonElementByJsonPathAsAStringIntoScenarioVariable(final String jsonPath, final String variableName) throws IOException {
 
         final String extracted = finderImpl.findJsonElementByJsonPathInRestResponseBodyAString(jsonPath);
 

@@ -48,6 +48,15 @@ Scenario: A scenario to test replying params
     AssertRestResponse has code '200'
     AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'string' with value: 0987654321
 
+Scenario: A scenario to test replaying path params
+    RestRequest setup new request
+    RestRequest add path param with name 'named-path-param' and value 'bob'
+
+    RestRequest perform 'GET' on '/replay-path-param/{named-path-param}'
+
+    AssertRestResponse has code '200'
+    AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'string' with value: bob
+
 Scenario: A scenario to test response times
     RestRequest setup new request
     RestRequest add param with name 'wait-value' and value '500'
