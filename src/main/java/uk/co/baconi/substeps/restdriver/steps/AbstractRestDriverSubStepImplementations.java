@@ -78,6 +78,9 @@ public abstract class AbstractRestDriverSubStepImplementations {
         return request;
     }
 
+    protected <A> A getCustomVariable(final String variableName, final Class<A> type) {
+        return getOrThrowError("Custom Scenario Variable", () -> get(Scope.SCENARIO, variableName, type));
+    }
 
     //
     // Request Body

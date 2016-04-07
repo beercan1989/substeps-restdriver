@@ -24,6 +24,7 @@ import com.technophobia.substeps.model.SubSteps.StepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.RestAssertionStepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.RestRequestBuilderStepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonAssertionStepImplementations;
+import uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonExtractorStepImplementations;
 import uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplementations;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
@@ -31,7 +32,8 @@ import uk.co.baconi.substeps.restdriver.steps.impl.json.RestJsonFinderStepImplem
         RestRequestBuilderStepImplementations.class,
         RestAssertionStepImplementations.class,
         RestJsonAssertionStepImplementations.class,
-        RestJsonFinderStepImplementations.class
+        RestJsonFinderStepImplementations.class,
+        RestJsonExtractorStepImplementations.class
 })
 public class BaseRestDriverStepImplementations {
 }

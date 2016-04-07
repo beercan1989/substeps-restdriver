@@ -42,7 +42,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+
+import static uk.co.baconi.substeps.restdriver.utils.ExecutionContextUtil.get;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
 public class RestRequestBuilderStepImplementations extends AbstractRestDriverSubStepImplementations {
@@ -58,6 +61,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest setup new request")
     public void restRequestSetupNewRequest() {
         setRequest(createNewRequest());
+        setRequestBodyData(new ArrayList<>());
 
         // TODO - Consider resetting other parts?
     }
@@ -235,8 +239,8 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * Add data to the current request being build, at a position with name and value provided.
      *
      * @param position the position in the json array to place the key pair
-     * @param name the key of the paired data
-     * @param value the value of the paired data
+     * @param name     the key of the paired data
+     * @param value    the value of the paired data
      * @example RestRequest add data at position '0' with name 'username' and value 'bob'
      * @section Rest Builder
      */
@@ -356,13 +360,47 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      * @param name  the name of the url parameter to add
      * @param value the value to set in the url parameter
      * @example RestRequest add param with name 'name' and value 'bob'
-     * @section Rest Builder
+     * @section Rest Builder - Param
      */
     @Step("RestRequest add param with name '([^']+)' and value '([^']+)'")
     public void restRequestAddParamWithNameAndValue(final String name, final String value) {
 
-        LOG.debug("Adding to Request param [{}] with value [{}].", name, value);
+        LOG.debug("Adding to Request a param [{}] with value [{}].", name, value);
 
         getRequest().param(name, value);
+    }
+
+    /**
+     * Add a named path parameter for the url on the current rest request being built with the given name and value
+     *
+     * @param name  the name of the path parameter to add
+     * @param value the value to set in the path parameter
+     * @example RestRequest add path param with name 'named-path-param' and value 'bob'
+     * @section Rest Builder - Param
+     */
+    @Step("RestRequest add path param with name '([^']+)' and value '([^']+)'")
+    public void restRequestAddPathParamWithNameAndValue(final String name, final String value) {
+
+        LOG.debug("Adding to Request a path param [{}] with value [{}].", name, value);
+
+        getRequest().pathParam(name, value);
+    }
+
+    /**
+     * Add a named path parameter for the url on the current rest request being built with the given name and scenario variable value
+     *
+     * @param name         the name of the path parameter to add
+     * @param variableName the value to set in the path parameter
+     * @example RestRequest add path param with name 'named-path-param' and scenario variable 'variable-name'
+     * @section Rest Builder - Param
+     */
+    @Step("RestRequest add path param with name '([^']+)' and scenario variable '([^']+)'")
+    public void restRequestAddPathParamWithNameAndScenarioVariable(final String name, final String variableName) {
+
+        LOG.debug("Adding to Request a path param [{}] with scenario variable name [{}].", name, variableName);
+
+        final String value = getCustomVariable(variableName, String.class);
+
+        getRequest().pathParam(name, value);
     }
 }

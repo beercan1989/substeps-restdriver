@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -115,6 +116,12 @@ public class TestRestController {
         return new Result<>(param);
     }
 
+    @RequestMapping("/replay-path-param/{param}")
+    @ResponseStatus(HttpStatus.OK)
+    Result<String> replayPathParam(@PathVariable final String param) {
+        return new Result<>(param);
+    }
+
     @RequestMapping("/timed")
     @ResponseStatus(HttpStatus.OK)
     void replayParam(@RequestParam("wait-value") final Long value, @RequestParam("wait-unit") final TimeUnit unit) throws InterruptedException {
@@ -125,5 +132,11 @@ public class TestRestController {
     @ResponseStatus(HttpStatus.OK)
     List<Map<String, String>> replayJsonArray(@RequestBody List<Map<String, String>> body) {
         return body;
+    }
+
+    @RequestMapping("/generate-uuid")
+    @ResponseStatus(HttpStatus.OK)
+    Result<String> replayPathParam() {
+        return new Result<>(UUID.randomUUID().toString());
     }
 }
