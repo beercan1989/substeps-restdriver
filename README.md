@@ -9,24 +9,24 @@ Project to provide a new type of Driver for use with Substeps, that will enable 
 + Java 8
 + Substeps 1.0.1
 
-## Latest version available in Maven Central
+## Documentation
++ Available substeps: [docs/rest-driver-substeps.md](docs/rest-driver-substeps.md)
+
+## Include as Maven dependency
 ```xml
 <dependency>
     <groupId>uk.co.baconi.substeps</groupId>
     <artifactId>restdriver-substeps</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 </dependency>
 ```
-
-## Documentation
-+ Available substeps: [docs/rest-driver-substeps.md](docs/rest-driver-substeps.md)
 
 ## Features that might be included in the future
 + XML Support
 + Bug fixing
 + Other enhancements
 
-## Changes coming in 0.0.6
+## Changes in 0.0.6
 + Ability to extract data
 + Ability to set named path parameters, both manual and extracted data
 + Ability to assert based on extracted data
