@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 @StepImplementations(requiredInitialisationClasses = RestDriverSetupAndTearDown.class)
@@ -58,6 +59,7 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
     @Step("RestRequest setup new request")
     public void restRequestSetupNewRequest() {
         setRequest(createNewRequest());
+        setRequestBodyData(new ArrayList<>());
 
         // TODO - Consider resetting other parts?
     }
