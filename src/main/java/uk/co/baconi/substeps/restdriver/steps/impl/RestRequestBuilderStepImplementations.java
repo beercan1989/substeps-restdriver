@@ -391,11 +391,11 @@ public class RestRequestBuilderStepImplementations extends AbstractRestDriverSub
      *
      * @param name         the name of the path parameter to add
      * @param variableName the value to set in the path parameter
-     * @example RestRequest add path param with name 'named-path-param' and value 'bob'
+     * @example RestRequest add path param with name 'named-path-param' and scenario variable 'variable-name'
      * @section Rest Builder - Param
      */
-    @Step("RestRequest add path param with name '([^']+)' and value '([^']+)'")
-    public void restRequestAddPathParamWithNameAndScenarioVariableValue(final String name, final String variableName) {
+    @Step("RestRequest add path param with name '([^']+)' and scenario variable '([^']+)'")
+    public void restRequestAddPathParamWithNameAndScenarioVariable(final String name, final String variableName) {
 
         LOG.debug("Adding to Request a path param [{}] with scenario variable name [{}].", name, variableName);
 
