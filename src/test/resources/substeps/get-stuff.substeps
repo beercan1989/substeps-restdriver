@@ -4,3 +4,4 @@ Define: Given I am creating an API call to get some stuff
 
 Define: Containing some stuff
     AssertJsonElement ByJsonPath 'value' in RestResponseBody a 'string' with value: Stuff 6
+    AssertJsonElement ByJsonPath 'value' in RestResponseBody a 'string' contains value: 6

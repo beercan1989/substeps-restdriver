@@ -91,6 +91,25 @@ public class RestJsonAssertionStepImplementations extends AbstractRestDriverSubS
     }
 
     /**
+     * Assert that at the given JsonPath there is a string that contains the given value.
+     * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
+     *
+     * @param jsonPath      the JsonPath to search with
+     * @param expectedValue the expected string to find
+     * @throws IOException if the response body could not be read
+     * @example AssertJsonElement ByJsonPath 'someString' in RestResponseBody a 'string' contains value: test
+     * @section Rest Assertion - JSON
+     */
+    @Step("AssertJsonElement ByJsonPath '([^']+)' in RestResponseBody a 'string' contains value: (.*)")
+    public void assertJsonElementByJsonPathInRestResponseBodyAStringContainsValue(final String jsonPath, final String expectedValue) throws IOException {
+        LOG.debug("Asserting that by JsonPath [{}] there is a string containing value: {}", jsonPath, expectedValue);
+
+        final String result = finderImpl.findJsonElementByJsonPathInRestResponseBodyAString(jsonPath);
+
+        assertThat(result, containsString(expectedValue));
+    }
+
+    /**
      * Assert that at the given JsonPath there is a number with the given value.
      * For JsonPath See: https://github.com/jayway/JsonPath#getting-started
      *
