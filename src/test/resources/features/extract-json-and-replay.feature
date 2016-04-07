@@ -18,4 +18,4 @@ Scenario: Able to extract from json and replay in a url for the next request
     AssertRestResponse has code '200'
     AssertRestResponseBody is JSON 'object'
 
-    AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'string' scenario variable: GENERATED_UUID
+    AssertJsonElement ByJsonPath 'result' in RestResponseBody a 'string' with value in scenario variable: GENERATED_UUID
